@@ -1,24 +1,19 @@
 {
   "images": [
     {
-      "imgPath": "./images/slideImage01.jpg",
-      "init": true
+      "imgPath": "./images/slideImage01.jpg"
     },
     {
-      "imgPath": "./images/slideImage02.jpg",
-      "init": false
+      "imgPath": "./images/slideImage02.jpg"
     },
     {
-      "imgPath": "./images/slideImage03.jpg",
-      "init": false
+      "imgPath": "./images/slideImage03.jpg"
     },
     {
-      "imgPath": "./images/slideImage04.jpg",
-      "init": false
+      "imgPath": "./images/slideImage04.jpg"
     },
     {
-      "imgPath": "./images/slideImage05.jpg",
-      "init": false
+      "imgPath": "./images/slideImage05.jpg"
     }
   ]
 }

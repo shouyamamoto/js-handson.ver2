@@ -1,13 +1,24 @@
 // json取得先
 const fetchURL = 'https://jsondata.okiba.me/v1/json/IOQ9t210418034754'
 
-const slideShowContainer = document.getElementById('js-slideShow')
+// DOMの取得
+const slideShow = document.getElementById('js-slideShow')
+const slideShowContainer = document.getElementById('js-slideShowContainer')
+const prevArrow = document.getElementById('js-prevArrow')
+const nextArrow = document.getElementById('js-nextArrow')
+const pageNation = document.getElementById('js-pageNation')
+
+// クラス名の追加
+slideShow.classList.add('slideShow')
 slideShowContainer.classList.add('slideShowContainer')
+
+let currentNum = 0
+const slideImageArray = []
 
 const myFetch = async (fetchURL) => {
   try {
     const res = await fetch(fetchURL)
-    const data = res.json()
+    const data = await res.json()
     return data
   } catch (e) {
     console.log(e.error)
@@ -20,30 +31,66 @@ const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve(myFetch(fetchURL))
-    }, 100)
+    }, 3000)
   })
 }
 
 const createSlide = async () => {
-  const imagePaths = await fetchSlideShowImages()
-  createImageList(imagePaths)
+  const SlideImages = await fetchSlideShowImages()
+  createImageList(SlideImages)
+  prevArrow.classList.add('disabled')
 }
 createSlide()
 
-const createImageList = (imagePaths) => {
+const createImageList = (SlideImages) => {
   const imageListFrag = document.createDocumentFragment()
 
-  imagePaths.images.map(image => {
+  SlideImages.images.map((image, index) => {
     const li = document.createElement('li')
     const img = document.createElement('img')
     img.classList.add('slideImage')
-    if (image.init) {
+    if (index === 0) {
       img.classList.add('active')
     }
     img.src = image.imgPath
     li.appendChild(img)
     imageListFrag.appendChild(li)
+    slideImageArray.push(img)
+  })
+  slideShowContainer.appendChild(imageListFrag)
+}
+
+const onClickArrow = () => {
+  nextArrow.addEventListener('click', () => {
+    changeImage(1)
+    prevArrow.classList.remove('disabled')
+    if (isLast(currentNum)) {
+      nextArrow.classList.add('disabled')
+    }
   })
 
-  slideShowContainer.appendChild(imageListFrag)
+  prevArrow.addEventListener('click', () => {
+    changeImage(-1)
+    nextArrow.classList.remove('disabled')
+    if (isFirst(currentNum)) {
+      prevArrow.classList.add('disabled')
+    }
+  })
+}
+onClickArrow()
+
+const changeImage = (num) => {
+  if (currentNum + num >= 0 && currentNum + num <= slideImageArray.length - 1) {
+    slideImageArray[currentNum].classList.remove('active')
+    currentNum += num
+    slideImageArray[currentNum].classList.add('active')
+  }
+}
+
+const isLast = (currentNum) => {
+  return currentNum === slideImageArray.length - 1
+}
+
+const isFirst = (currentNum) => {
+  return currentNum === 0
 }

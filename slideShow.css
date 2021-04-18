@@ -13,6 +13,10 @@ li {
   margin: 0;
 }
 
+.slideShow {
+  position: relative;
+}
+
 .slideShowContainer {
   position: relative;
   min-height: 400px;
@@ -28,4 +32,36 @@ li {
 }
 .slideImage.active {
   z-index: 1;
+}
+
+#js-prevArrow {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: -80px;
+  transform: translateY(-50%);
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 20px solid #000000;
+}
+#js-nextArrow {
+  position: absolute;
+  display: block;
+  top: 50%;
+  right: -80px;
+  transform: translateY(-50%);
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #000000;
+}
+#js-nextArrow.disabled,
+#js-prevArrow.disabled {
+  opacity: 0.6;
+}
+#js-pageNation {
+  position: absolute;
+  bottom: -60px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
