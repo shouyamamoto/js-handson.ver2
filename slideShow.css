@@ -56,7 +56,7 @@ li {
 }
 #js-nextArrow.disabled,
 #js-prevArrow.disabled {
-  opacity: 0.6;
+  opacity: 0.3;
 }
 #js-pageNation {
   position: absolute;

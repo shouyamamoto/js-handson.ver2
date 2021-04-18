@@ -31,13 +31,14 @@ const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve(myFetch(fetchURL))
-    }, 3000)
+    }, 100)
   })
 }
 
 const createSlide = async () => {
   const SlideImages = await fetchSlideShowImages()
   createImageList(SlideImages)
+  initPageNation()
   prevArrow.classList.add('disabled')
 }
 createSlide()
@@ -63,7 +64,9 @@ const createImageList = (SlideImages) => {
 const onClickArrow = () => {
   nextArrow.addEventListener('click', () => {
     changeImage(1)
+    changePageNationIncrement(1)
     prevArrow.classList.remove('disabled')
+
     if (isLast(currentNum)) {
       nextArrow.classList.add('disabled')
     }
@@ -71,6 +74,7 @@ const onClickArrow = () => {
 
   prevArrow.addEventListener('click', () => {
     changeImage(-1)
+    changePageNationDecrement(-1)
     nextArrow.classList.remove('disabled')
     if (isFirst(currentNum)) {
       prevArrow.classList.add('disabled')
@@ -93,4 +97,14 @@ const isLast = (currentNum) => {
 
 const isFirst = (currentNum) => {
   return currentNum === 0
+}
+
+const initPageNation = () => {
+  pageNation.innerText = `${currentNum + 1} / ${slideImageArray.length}`
+}
+const changePageNationIncrement = (num) => {
+  pageNation.innerText = `${currentNum + num} / ${slideImageArray.length}`
+}
+const changePageNationDecrement = (num) => {
+  pageNation.innerText = `${currentNum - num} / ${slideImageArray.length}`
 }
