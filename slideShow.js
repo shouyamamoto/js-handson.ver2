@@ -70,7 +70,6 @@ const onClickArrow = () => {
     changeImage(1)
     changePageNationIncrement(1)
     prevArrow.classList.remove('disabled')
-    console.log('next')
 
     if (isLast(currentNum)) {
       nextArrow.classList.add('disabled')
@@ -81,7 +80,6 @@ const onClickArrow = () => {
     changeImage(-1)
     changePageNationDecrement(-1)
     nextArrow.classList.remove('disabled')
-    console.log('prev')
 
     if (isFirst(currentNum)) {
       prevArrow.classList.add('disabled')
