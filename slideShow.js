@@ -1,5 +1,5 @@
 // json取得先
-const fetchURL = 'https://jsondata.okiba.me/v1/json/mlmPr210418032518'
+const fetchURL = 'https://jsondata.okiba.me/v1/json/IOQ9t210418034754'
 
 const slideShowContainer = document.getElementById('js-slideShow')
 slideShowContainer.classList.add('slideShowContainer')
@@ -32,12 +32,18 @@ createSlide()
 
 const createImageList = (imagePaths) => {
   const imageListFrag = document.createDocumentFragment()
+
   imagePaths.images.map(image => {
     const li = document.createElement('li')
     const img = document.createElement('img')
+    img.classList.add('slideImage')
+    if (image.init) {
+      img.classList.add('active')
+    }
     img.src = image.imgPath
     li.appendChild(img)
     imageListFrag.appendChild(li)
   })
+
   slideShowContainer.appendChild(imageListFrag)
 }
