@@ -54,10 +54,17 @@ li {
   border-bottom: 20px solid transparent;
   border-left: 20px solid #000000;
 }
+
+#js-nextArrow.hidden,
+#js-prevArrow.hidden {
+  opacity: 0;
+}
 #js-nextArrow.disabled,
 #js-prevArrow.disabled {
   opacity: 0.3;
+  pointer-events: none;
 }
+
 #js-pageNation {
   position: absolute;
   bottom: -60px;

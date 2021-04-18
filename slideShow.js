@@ -11,6 +11,8 @@ const pageNation = document.getElementById('js-pageNation')
 // クラス名の追加
 slideShow.classList.add('slideShow')
 slideShowContainer.classList.add('slideShowContainer')
+prevArrow.classList.add('hidden')
+nextArrow.classList.add('hidden')
 
 let currentNum = 0
 const slideImageArray = []
@@ -31,7 +33,7 @@ const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve(myFetch(fetchURL))
-    }, 100)
+    }, 3000)
   })
 }
 
@@ -39,6 +41,8 @@ const createSlide = async () => {
   const SlideImages = await fetchSlideShowImages()
   createImageList(SlideImages)
   initPageNation()
+  nextArrow.classList.remove('hidden')
+  prevArrow.classList.remove('hidden')
   prevArrow.classList.add('disabled')
 }
 createSlide()
@@ -66,6 +70,7 @@ const onClickArrow = () => {
     changeImage(1)
     changePageNationIncrement(1)
     prevArrow.classList.remove('disabled')
+    console.log('next')
 
     if (isLast(currentNum)) {
       nextArrow.classList.add('disabled')
@@ -76,6 +81,8 @@ const onClickArrow = () => {
     changeImage(-1)
     changePageNationDecrement(-1)
     nextArrow.classList.remove('disabled')
+    console.log('prev')
+
     if (isFirst(currentNum)) {
       prevArrow.classList.add('disabled')
     }
