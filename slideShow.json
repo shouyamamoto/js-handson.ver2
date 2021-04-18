@@ -1,0 +1,19 @@
+{
+  "images": [
+    {
+      "imgPath": "./images/slideImages01.jpg"
+    },
+    {
+      "imgPath": "./images/slideImages02.jpg"
+    },
+    {
+      "imgPath": "./images/slideImages03.jpg"
+    },
+    {
+      "imgPath": "./images/slideImages04.jpg"
+    },
+    {
+      "imgPath": "./images/slideImages05.jpg"
+    }
+  ]
+}
