@@ -19,7 +19,6 @@ const { slideImageArray } = slideState
 const myFetch = async (fetchURL) => {
   try {
     const res = await fetch(fetchURL)
-    console.log(res)
     const data = await res.json()
     return data
   } catch {
@@ -68,8 +67,9 @@ const createImageList = (slideImages) => {
 
 const clickArrow = () => {
   nextArrow.addEventListener('click', () => {
-    changeImage(1)
-    changePaginationIncrement(1)
+    const nextNum = 1
+    changeImage(nextNum)
+    changePaginationIncrement(nextNum)
     prevArrow.classList.remove('disabled')
 
     if (isLast(currentNum)) {
@@ -78,8 +78,9 @@ const clickArrow = () => {
   })
 
   prevArrow.addEventListener('click', () => {
-    changeImage(-1)
-    changePaginationDecrement(-1)
+    const prevNum = -1
+    changeImage(prevNum)
+    changePaginationDecrement(prevNum)
     nextArrow.classList.remove('disabled')
 
     if (isFirst(currentNum)) {
@@ -107,9 +108,9 @@ const isFirst = (currentNum) => {
 const initPagination = () => {
   pagination.innerText = `${currentNum + 1} / ${slideImageArray.length}`
 }
-const changePaginationIncrement = (num) => {
-  pagination.innerText = `${currentNum + num} / ${slideImageArray.length}`
+const changePaginationIncrement = (nextNum) => {
+  pagination.innerText = `${currentNum + nextNum} / ${slideImageArray.length}`
 }
-const changePaginationDecrement = (num) => {
-  pagination.innerText = `${currentNum - num} / ${slideImageArray.length}`
+const changePaginationDecrement = (prevNum) => {
+  pagination.innerText = `${currentNum - prevNum} / ${slideImageArray.length}`
 }
