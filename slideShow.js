@@ -8,12 +8,6 @@ const prevArrow = document.getElementById('js-prevArrow')
 const nextArrow = document.getElementById('js-nextArrow')
 const pagination = document.getElementById('js-pagination')
 
-// クラス名の追加
-slideShow.classList.add('slideShow')
-slideShowContainer.classList.add('slideShowContainer')
-prevArrow.classList.add('hidden')
-nextArrow.classList.add('hidden')
-
 let currentNum = 0
 const slideImageArray = []
 
