@@ -1,5 +1,5 @@
 // json取得先
-const fetchURL = 'https://jsondata.okiba.me/v1/json/IOQ9t210418034754'
+const fetchURL = 'https://fdsafdsajsondata.okiba.me/v1/json/IOQ9t210418034754'
 
 // DOMの取得
 const slideShow = document.getElementById('js-slideShow')
@@ -20,10 +20,11 @@ const slideImageArray = []
 const myFetch = async (fetchURL) => {
   try {
     const res = await fetch(fetchURL)
+    console.log(res)
     const data = await res.json()
     return data
-  } catch (e) {
-    console.log(e.error)
+  } catch {
+    alert('データを取得できませんでした。')
   } finally {
     console.log('myFetch run')
   }
