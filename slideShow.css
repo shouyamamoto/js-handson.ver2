@@ -43,6 +43,7 @@ li {
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
   border-right: 20px solid #000000;
+  opacity: 0;
 }
 #js-nextArrow {
   position: absolute;
@@ -53,12 +54,14 @@ li {
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
   border-left: 20px solid #000000;
-}
-
-#js-nextArrow.hidden,
-#js-prevArrow.hidden {
   opacity: 0;
 }
+
+#js-nextArrow.visible,
+#js-prevArrow.visible {
+  opacity: 1;
+}
+
 #js-nextArrow.disabled,
 #js-prevArrow.disabled {
   opacity: 0.3;

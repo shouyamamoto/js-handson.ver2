@@ -37,8 +37,8 @@ const createSlide = async () => {
   createImageList(slideImages)
   initPagination()
   clickArrow()
-  nextArrow.classList.remove('hidden')
-  prevArrow.classList.remove('hidden')
+  nextArrow.classList.add('visible')
+  prevArrow.classList.add('visible')
   prevArrow.classList.add('disabled')
 }
 createSlide()
