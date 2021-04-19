@@ -6,7 +6,7 @@ const slideShow = document.getElementById('js-slideShow')
 const slideShowContainer = document.getElementById('js-slideShowContainer')
 const prevArrow = document.getElementById('js-prevArrow')
 const nextArrow = document.getElementById('js-nextArrow')
-const pageNation = document.getElementById('js-pageNation')
+const pagination = document.getElementById('js-pagination')
 
 // クラス名の追加
 slideShow.classList.add('slideShow')
@@ -40,7 +40,7 @@ const fetchSlideShowImages = () => {
 const createSlide = async () => {
   const SlideImages = await fetchSlideShowImages()
   createImageList(SlideImages)
-  initPageNation()
+  initPagination()
   nextArrow.classList.remove('hidden')
   prevArrow.classList.remove('hidden')
   prevArrow.classList.add('disabled')
@@ -68,7 +68,7 @@ const createImageList = (SlideImages) => {
 const onClickArrow = () => {
   nextArrow.addEventListener('click', () => {
     changeImage(1)
-    changePageNationIncrement(1)
+    changePaginationIncrement(1)
     prevArrow.classList.remove('disabled')
 
     if (isLast(currentNum)) {
@@ -78,7 +78,7 @@ const onClickArrow = () => {
 
   prevArrow.addEventListener('click', () => {
     changeImage(-1)
-    changePageNationDecrement(-1)
+    changePaginationDecrement(-1)
     nextArrow.classList.remove('disabled')
 
     if (isFirst(currentNum)) {
@@ -104,12 +104,12 @@ const isFirst = (currentNum) => {
   return currentNum === 0
 }
 
-const initPageNation = () => {
-  pageNation.innerText = `${currentNum + 1} / ${slideImageArray.length}`
+const initPagination = () => {
+  pagination.innerText = `${currentNum + 1} / ${slideImageArray.length}`
 }
-const changePageNationIncrement = (num) => {
-  pageNation.innerText = `${currentNum + num} / ${slideImageArray.length}`
+const changePaginationIncrement = (num) => {
+  pagination.innerText = `${currentNum + num} / ${slideImageArray.length}`
 }
-const changePageNationDecrement = (num) => {
-  pageNation.innerText = `${currentNum - num} / ${slideImageArray.length}`
+const changePaginationDecrement = (num) => {
+  pagination.innerText = `${currentNum - num} / ${slideImageArray.length}`
 }
