@@ -8,8 +8,13 @@ const prevArrow = document.getElementById('js-prevArrow')
 const nextArrow = document.getElementById('js-nextArrow')
 const pagination = document.getElementById('js-pagination')
 
-let currentNum = 0
-const slideImageArray = []
+const slideState = {
+  currentNum: 0,
+  slideImageArray: []
+}
+
+let { currentNum } = slideState
+const { slideImageArray } = slideState
 
 const myFetch = async (fetchURL) => {
   try {
