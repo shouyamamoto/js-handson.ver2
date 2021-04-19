@@ -64,7 +64,7 @@ const createImageList = (slideImages) => {
     imageListFragment.appendChild(li)
     slideImageArray.push(img)
   })
-  slideShowContainer.appendChild(imageListFragment)
+  slideShow.appendChild(imageListFragment)
 }
 
 const clickArrow = () => {

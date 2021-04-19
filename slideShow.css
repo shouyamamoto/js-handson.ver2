@@ -13,11 +13,11 @@ li {
   margin: 0;
 }
 
-.slideShow {
+.slideShowContainer {
   position: relative;
 }
 
-.slideShowContainer {
+.slideShow {
   position: relative;
   min-height: 400px;
   width: 600px;
