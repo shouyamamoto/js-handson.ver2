@@ -1,5 +1,5 @@
 // json取得先
-const fetchURL = 'https://jsondata.okiba.me/v1/json/IOQ9t210418034754'
+const fetchURL = 'https://jsondata.okiba.me/v1/json/Z96fg210419122813'
 
 // DOMの取得
 const slideShow = document.getElementById('js-slideShow')
