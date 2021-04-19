@@ -42,6 +42,7 @@ const createSlide = async () => {
   const slideImages = await fetchSlideShowImages()
   createImageList(slideImages)
   initPagination()
+  clickArrow()
   nextArrow.classList.remove('hidden')
   prevArrow.classList.remove('hidden')
   prevArrow.classList.add('disabled')
@@ -66,7 +67,7 @@ const createImageList = (slideImages) => {
   slideShowContainer.appendChild(imageListFragment)
 }
 
-const onClickArrow = () => {
+const clickArrow = () => {
   nextArrow.addEventListener('click', () => {
     changeImage(1)
     changePaginationIncrement(1)
@@ -87,7 +88,6 @@ const onClickArrow = () => {
     }
   })
 }
-onClickArrow()
 
 const changeImage = (num) => {
   if (currentNum + num >= 0 && currentNum + num <= slideImageArray.length - 1) {
