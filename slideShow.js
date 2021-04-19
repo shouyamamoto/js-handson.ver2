@@ -39,8 +39,8 @@ const fetchSlideShowImages = () => {
 }
 
 const createSlide = async () => {
-  const SlideImages = await fetchSlideShowImages()
-  createImageList(SlideImages)
+  const slideImages = await fetchSlideShowImages()
+  createImageList(slideImages)
   initPagination()
   nextArrow.classList.remove('hidden')
   prevArrow.classList.remove('hidden')
@@ -48,10 +48,10 @@ const createSlide = async () => {
 }
 createSlide()
 
-const createImageList = (SlideImages) => {
-  const imageListFrag = document.createDocumentFragment()
+const createImageList = (slideImages) => {
+  const imageListFragment = document.createDocumentFragment()
 
-  SlideImages.images.map((image, index) => {
+  slideImages.images.map((image, index) => {
     const li = document.createElement('li')
     const img = document.createElement('img')
     img.classList.add('slideImage')
@@ -60,10 +60,10 @@ const createImageList = (SlideImages) => {
     }
     img.src = image.imgPath
     li.appendChild(img)
-    imageListFrag.appendChild(li)
+    imageListFragment.appendChild(li)
     slideImageArray.push(img)
   })
-  slideShowContainer.appendChild(imageListFrag)
+  slideShowContainer.appendChild(imageListFragment)
 }
 
 const onClickArrow = () => {
