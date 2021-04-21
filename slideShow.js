@@ -40,7 +40,7 @@ const createSlide = async () => {
   const slideImages = await fetchSlideShowImages()
   createImageList(slideImages)
   initPagination()
-  clickArrow()
+  attachClickEventForArrows()
   nextArrow.classList.add('visible')
   prevArrow.classList.add('visible')
   prevArrow.classList.add('disabled')
@@ -65,7 +65,7 @@ const createImageList = (slideImages) => {
   slideShow.appendChild(imageListFragment)
 }
 
-const clickArrow = () => {
+const attachClickEventForArrows = () => {
   nextArrow.addEventListener('click', () => {
     const nextNum = 1
     changeImage(nextNum)
