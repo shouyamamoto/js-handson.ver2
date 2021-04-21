@@ -24,7 +24,7 @@ const myFetch = async (fetchURL) => {
   } catch {
     slideShowContainer.textContent = 'データを取得できませんでした。'
   } finally {
-    console.log('myFetch execute')
+    console.log('myFetch executed')
   }
 }
 
