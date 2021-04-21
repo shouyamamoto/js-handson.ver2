@@ -11,12 +11,8 @@ const pagination = document.getElementById('js-pagination')
 const slideState = {
   currentNum: 0,
   initNum: 1,
-  slideImageArray: []
+  images: []
 }
-
-let { currentNum } = slideState
-const { slideImageArray } = slideState
-const { initNum } = slideState
 
 const myFetch = async (fetchURL) => {
   try {
@@ -62,7 +58,7 @@ const createImageList = (slideImages) => {
     img.src = image.imgPath
     li.appendChild(img)
     imageListFragment.appendChild(li)
-    slideImageArray.push(img)
+    slideState.images.push(img)
   })
   slideShow.appendChild(imageListFragment)
 }
@@ -74,7 +70,7 @@ const attachClickEventForArrows = () => {
     changePaginationIncrement(nextNum)
     prevArrow.classList.remove('disabled')
 
-    if (isLast(currentNum)) {
+    if (isLast(slideState.currentNum)) {
       nextArrow.classList.add('disabled')
     }
   })
@@ -85,22 +81,22 @@ const attachClickEventForArrows = () => {
     changePaginationDecrement(prevNum)
     nextArrow.classList.remove('disabled')
 
-    if (isFirst(currentNum)) {
+    if (isFirst(slideState.currentNum)) {
       prevArrow.classList.add('disabled')
     }
   })
 }
 
 const changeImage = (num) => {
-  if (currentNum + num >= 0 && currentNum + num <= slideImageArray.length - 1) {
-    slideImageArray[currentNum].classList.remove('active')
-    currentNum += num
-    slideImageArray[currentNum].classList.add('active')
+  if (slideState.currentNum + num >= 0 && slideState.currentNum + num <= slideState.images.length - 1) {
+    slideState.images[slideState.currentNum].classList.remove('active')
+    slideState.currentNum += num
+    slideState.images[slideState.currentNum].classList.add('active')
   }
 }
 
 const isLast = (currentNum) => {
-  return currentNum === slideImageArray.length - 1
+  return currentNum === slideState.images.length - 1
 }
 
 const isFirst = (currentNum) => {
@@ -108,11 +104,11 @@ const isFirst = (currentNum) => {
 }
 
 const initPagination = () => {
-  pagination.innerText = `${initNum} / ${slideImageArray.length}`
+  pagination.innerText = `${slideState.initNum} / ${slideState.images.length}`
 }
 const changePaginationIncrement = (nextNum) => {
-  pagination.innerText = `${currentNum + nextNum} / ${slideImageArray.length}`
+  pagination.innerText = `${slideState.currentNum + nextNum} / ${slideState.images.length}`
 }
 const changePaginationDecrement = (prevNum) => {
-  pagination.innerText = `${currentNum - prevNum} / ${slideImageArray.length}`
+  pagination.innerText = `${slideState.currentNum - prevNum} / ${slideState.images.length}`
 }
