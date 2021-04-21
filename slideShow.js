@@ -22,7 +22,7 @@ const myFetch = async (fetchURL) => {
     const data = await res.json()
     return data
   } catch {
-    alert('データを取得できませんでした。')
+    slideShowContainer.textContent = 'データを取得できませんでした。'
   } finally {
     console.log('myFetch execute')
   }
