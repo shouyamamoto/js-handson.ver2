@@ -34,7 +34,7 @@ li {
   z-index: 1;
 }
 
-#js-prevArrow {
+.prevArrow {
   position: absolute;
   display: block;
   top: 50%;
@@ -42,10 +42,10 @@ li {
   transform: translateY(-50%);
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
-  border-right: 20px solid #000000;
+  border-right: 20px solid #000;
   opacity: 0;
 }
-#js-nextArrow {
+.nextArrow {
   position: absolute;
   display: block;
   top: 50%;
@@ -53,22 +53,22 @@ li {
   transform: translateY(-50%);
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
-  border-left: 20px solid #000000;
+  border-left: 20px solid #000;
   opacity: 0;
 }
 
-#js-nextArrow.visible,
-#js-prevArrow.visible {
+.nextArrow.visible,
+.prevArrow.visible {
   opacity: 1;
 }
 
-#js-nextArrow.disabled,
-#js-prevArrow.disabled {
+.nextArrow.disabled,
+.prevArrow.disabled {
   opacity: 0.3;
   pointer-events: none;
 }
 
-#js-pagination {
+.pagination {
   position: absolute;
   bottom: -60px;
   width: 100%;
