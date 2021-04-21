@@ -10,11 +10,13 @@ const pagination = document.getElementById('js-pagination')
 
 const slideState = {
   currentNum: 0,
+  initNum: 1,
   slideImageArray: []
 }
 
 let { currentNum } = slideState
 const { slideImageArray } = slideState
+const { initNum } = slideState
 
 const myFetch = async (fetchURL) => {
   try {
@@ -106,7 +108,7 @@ const isFirst = (currentNum) => {
 }
 
 const initPagination = () => {
-  pagination.innerText = `${currentNum + 1} / ${slideImageArray.length}`
+  pagination.innerText = `${initNum} / ${slideImageArray.length}`
 }
 const changePaginationIncrement = (nextNum) => {
   pagination.innerText = `${currentNum + nextNum} / ${slideImageArray.length}`
