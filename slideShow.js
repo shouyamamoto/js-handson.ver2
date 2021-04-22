@@ -7,11 +7,13 @@ const slideShowContainer = document.getElementById('js-slideShowContainer')
 const prevArrow = document.getElementById('js-prevArrow')
 const nextArrow = document.getElementById('js-nextArrow')
 const pagination = document.getElementById('js-pagination')
+const dotPagination = document.getElementById('js-dotPagination')
 
 const slideState = {
   currentNum: 0,
   initNum: 1,
-  images: []
+  images: [],
+  dots: [],
 }
 
 const myFetch = async (fetchURL) => {
@@ -30,7 +32,7 @@ const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve(myFetch(fetchURL))
-    }, 3000)
+    }, 100)
   })
 }
 
@@ -38,6 +40,7 @@ const createSlide = async () => {
   const slideImages = await fetchSlideShowImages()
   createImageList(slideImages)
   initPagination()
+  createDotPagination(slideImages)
   attachClickEventForArrows()
   nextArrow.classList.add('visible')
   prevArrow.classList.add('visible')
@@ -66,8 +69,9 @@ const createImageList = (slideImages) => {
 const attachClickEventForArrows = () => {
   nextArrow.addEventListener('click', () => {
     const nextNum = 1
+    changeDotPagination(slideState.currentNum, nextNum)
     changeImage(nextNum)
-    changePaginationIncrement(nextNum)
+    changePaginationIncrement(slideState.currentNum, nextNum)
     prevArrow.classList.remove('disabled')
 
     if (isLast(slideState.currentNum)) {
@@ -77,8 +81,9 @@ const attachClickEventForArrows = () => {
 
   prevArrow.addEventListener('click', () => {
     const prevNum = -1
+    changeDotPagination(slideState.currentNum, prevNum)
     changeImage(prevNum)
-    changePaginationDecrement(prevNum)
+    changePaginationDecrement(slideState.currentNum, prevNum)
     nextArrow.classList.remove('disabled')
 
     if (isFirst(slideState.currentNum)) {
@@ -106,9 +111,65 @@ const isFirst = (currentNum) => {
 const initPagination = () => {
   pagination.innerText = `${slideState.initNum} / ${slideState.images.length}`
 }
-const changePaginationIncrement = (nextNum) => {
-  pagination.innerText = `${slideState.currentNum + nextNum} / ${slideState.images.length}`
+const changePaginationIncrement = (currentNum, nextNum) => {
+  pagination.innerText = `${currentNum + nextNum} / ${slideState.images.length}`
 }
-const changePaginationDecrement = (prevNum) => {
-  pagination.innerText = `${slideState.currentNum - prevNum} / ${slideState.images.length}`
+const changePaginationDecrement = (currentNum, prevNum) => {
+  pagination.innerText = `${currentNum - prevNum} / ${slideState.images.length}`
+}
+const changeDotPagination = (currentNum, num) => {
+  slideState.dots[currentNum].classList.remove('active')
+  currentNum += num
+  slideState.dots[currentNum].classList.add('active')
+}
+
+const createDotPagination = (slideImages) => {
+  const dotPaginationFragment = document.createDocumentFragment()
+
+  slideImages.images.forEach((image, index) => {
+    const dot = document.createElement('span')
+    if (index === slideState.currentNum) {
+      dot.classList.add('active')
+    }
+    slideState.dots.push(dot)
+    dot.addEventListener('click', () => attachClickEventForDot(dot, slideState.currentNum, index))
+    dotPaginationFragment.appendChild(dot)
+  })
+  dotPagination.appendChild(dotPaginationFragment)
+}
+
+const attachClickEventForDot = (dot, currentNum, index) => {
+  if (!isActive(dot)) {
+    slideState.dots[currentNum].classList.remove('active')
+    slideState.dots[index].classList.add('active')
+    currentNum = index
+    dotClickChangeImage(currentNum)
+    dotClickChangePagination(currentNum)
+
+    if (isLast(currentNum)) {
+      nextArrow.classList.add('disabled')
+    } else {
+      nextArrow.classList.remove('disabled')
+    }
+
+    if (isFirst(currentNum)) {
+      prevArrow.classList.add('disabled')
+    } else {
+      prevArrow.classList.remove('disabled')
+    }
+  }
+}
+
+const isActive = (dot) => {
+  return dot.classList.contains('active')
+}
+
+const dotClickChangeImage = (num) => {
+  slideState.images[slideState.currentNum].classList.remove('active')
+  slideState.currentNum = num
+  slideState.images[slideState.currentNum].classList.add('active')
+}
+
+const dotClickChangePagination = (currentNum) => {
+  pagination.textContent = `${currentNum + 1} / ${slideState.images.length}`
 }
