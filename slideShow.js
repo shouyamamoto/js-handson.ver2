@@ -139,24 +139,18 @@ const createDotPagination = (slideImages) => {
 }
 
 const attachClickEventForDot = (dot, currentNum, index) => {
-  if (!isActive(dot)) {
+  if (isActive(dot)) {
+    return
+  }
+  else {
     slideState.dots[currentNum].classList.remove('active')
     slideState.dots[index].classList.add('active')
     currentNum = index
     dotClickChangeImage(currentNum)
     dotClickChangePagination(currentNum)
 
-    if (isLast(currentNum)) {
-      nextArrow.classList.add('disabled')
-    } else {
-      nextArrow.classList.remove('disabled')
-    }
-
-    if (isFirst(currentNum)) {
-      prevArrow.classList.add('disabled')
-    } else {
-      prevArrow.classList.remove('disabled')
-    }
+    isLast(currentNum) ? nextArrow.classList.add('disabled') : nextArrow.classList.remove('disabled')
+    isFirst(currentNum) ? prevArrow.classList.add('disabled') : prevArrow.classList.remove('disabled')
   }
 }
 
