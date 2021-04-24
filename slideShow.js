@@ -12,6 +12,9 @@ const dotPagination = document.getElementById('js-dotPagination')
 const slideState = {
   currentNum: 0,
   initNum: 1,
+  nextNum: 1,
+  prevNum: -1,
+  loopCount: 0,
   images: [],
   dots: [],
 }
@@ -39,7 +42,7 @@ const fetchSlideShowImages = () => {
 const createSlide = async () => {
   const slideImages = await fetchSlideShowImages()
   createImageList(slideImages)
-  initPagination()
+  createPagination()
   createDotPagination(slideImages)
   attachClickEventForArrows()
   nextArrow.classList.add('visible')
@@ -65,64 +68,6 @@ const createImageList = (slideImages) => {
   })
   slideShow.appendChild(imageListFragment)
 }
-
-const attachClickEventForArrows = () => {
-  nextArrow.addEventListener('click', () => {
-    const nextNum = 1
-    changeDotPagination(slideState.currentNum, nextNum)
-    changeImage(nextNum)
-    changePaginationIncrement(slideState.currentNum, nextNum)
-    prevArrow.classList.remove('disabled')
-
-    if (isLast(slideState.currentNum)) {
-      nextArrow.classList.add('disabled')
-    }
-  })
-
-  prevArrow.addEventListener('click', () => {
-    const prevNum = -1
-    changeDotPagination(slideState.currentNum, prevNum)
-    changeImage(prevNum)
-    changePaginationDecrement(slideState.currentNum, prevNum)
-    nextArrow.classList.remove('disabled')
-
-    if (isFirst(slideState.currentNum)) {
-      prevArrow.classList.add('disabled')
-    }
-  })
-}
-
-const changeImage = (num) => {
-  if (slideState.currentNum + num >= 0 && slideState.currentNum + num <= slideState.images.length - 1) {
-    slideState.images[slideState.currentNum].classList.remove('active')
-    slideState.currentNum += num
-    slideState.images[slideState.currentNum].classList.add('active')
-  }
-}
-
-const isLast = (currentNum) => {
-  return currentNum === slideState.images.length - 1
-}
-
-const isFirst = (currentNum) => {
-  return currentNum === 0
-}
-
-const initPagination = () => {
-  pagination.innerText = `${slideState.initNum} / ${slideState.images.length}`
-}
-const changePaginationIncrement = (currentNum, nextNum) => {
-  pagination.innerText = `${currentNum + nextNum} / ${slideState.images.length}`
-}
-const changePaginationDecrement = (currentNum, prevNum) => {
-  pagination.innerText = `${currentNum - prevNum} / ${slideState.images.length}`
-}
-const changeDotPagination = (currentNum, num) => {
-  slideState.dots[currentNum].classList.remove('active')
-  currentNum += num
-  slideState.dots[currentNum].classList.add('active')
-}
-
 const createDotPagination = (slideImages) => {
   const dotPaginationFragment = document.createDocumentFragment()
 
@@ -137,7 +82,35 @@ const createDotPagination = (slideImages) => {
   })
   dotPagination.appendChild(dotPaginationFragment)
 }
+const createPagination = () => {
+  pagination.innerText = `${slideState.initNum} / ${slideState.images.length}`
+}
 
+const attachClickEventForArrows = () => {
+  nextArrow.addEventListener('click', () => {
+    changeDotPagination(slideState.currentNum, slideState.nextNum)
+    changeImage(slideState.nextNum)
+    changePaginationIncrement(slideState.currentNum, slideState.nextNum)
+    prevArrow.classList.remove('disabled')
+    clearInterval(setIntervalId)
+
+    if (isLast(slideState.currentNum)) {
+      nextArrow.classList.add('disabled')
+    }
+  })
+
+  prevArrow.addEventListener('click', () => {
+    changeDotPagination(slideState.currentNum, slideState.prevNum)
+    changeImage(slideState.prevNum)
+    changePaginationDecrement(slideState.currentNum, slideState.prevNum)
+    nextArrow.classList.remove('disabled')
+    clearInterval(setIntervalId)
+
+    if (isFirst(slideState.currentNum)) {
+      prevArrow.classList.add('disabled')
+    }
+  })
+}
 const attachClickEventForDot = (dot, currentNum, index) => {
   if (isActive(dot)) {
     return
@@ -154,16 +127,99 @@ const attachClickEventForDot = (dot, currentNum, index) => {
   }
 }
 
+const isLast = (currentNum) => {
+  return currentNum === slideState.images.length - 1
+}
+const isFirst = (currentNum) => {
+  return currentNum === 0
+}
 const isActive = (dot) => {
   return dot.classList.contains('active')
 }
 
+const changePaginationIncrement = (currentNum, nextNum) => {
+  pagination.innerText = `${currentNum + nextNum} / ${slideState.images.length}`
+}
+const changePaginationDecrement = (currentNum, prevNum) => {
+  pagination.innerText = `${currentNum - prevNum} / ${slideState.images.length}`
+}
+const changeDotPagination = (currentNum, num) => {
+  slideState.dots[currentNum].classList.remove('active')
+  currentNum += num
+  slideState.dots[currentNum].classList.add('active')
+}
+
+const changeImage = (num) => {
+  if (slideState.currentNum + num >= 0 && slideState.currentNum + num <= slideState.images.length - 1) {
+    slideState.images[slideState.currentNum].classList.remove('active')
+    slideState.currentNum += num
+    slideState.images[slideState.currentNum].classList.add('active')
+  }
+}
 const dotClickChangeImage = (num) => {
   slideState.images[slideState.currentNum].classList.remove('active')
   slideState.currentNum = num
   slideState.images[slideState.currentNum].classList.add('active')
+  clearInterval(setIntervalId)
 }
-
 const dotClickChangePagination = (currentNum) => {
   pagination.textContent = `${currentNum + 1} / ${slideState.images.length}`
 }
+const autoSlideChange = () => {
+  // もし最後のnumならば
+  if (isLast(slideState.currentNum)) {
+    slideState.images[slideState.currentNum].classList.remove('active')
+    slideState.dots[slideState.currentNum].classList.remove('active')
+    nextArrow.classList.add('disabled')
+    slideState.currentNum = 0
+    pagination.innerText = `${slideState.currentNum + 1} / ${slideState.images.length}`
+    slideState.loopCount++
+  }
+
+  // 1週目のみ
+  if (isFirst(slideState.loopCount)) {
+    slideState.images[slideState.currentNum].classList.remove('active')
+    slideState.dots[slideState.currentNum].classList.remove('active')
+    slideState.currentNum += slideState.nextNum
+    slideState.images[slideState.currentNum].classList.add('active')
+    slideState.dots[slideState.currentNum].classList.add('active')
+    pagination.innerText = `${slideState.currentNum + 1} / ${slideState.images.length}`
+
+    isFirst(slideState.currentNum) ? prevArrow.classList.add('disabled') : prevArrow.classList.remove('disabled')
+    isLast(slideState.currentNum) ? nextArrow.classList.add('disabled') : nextArrow.classList.remove('disabled')
+    return
+  }
+
+  // 2週目で、0番目の写真がきたら 0枚目と1つめのドットをactiveに
+  if (slideState.loopCount !== 0 && isFirst(slideState.currentNum) && !slideState.images[slideState.currentNum].classList.contains('active')) {
+    slideState.images[slideState.currentNum].classList.add('active')
+    slideState.dots[slideState.currentNum].classList.add('active')
+    prevArrow.classList.add('disabled')
+    nextArrow.classList.remove('disabled')
+    return
+  }
+
+  // 2週目いこう、0番目、0番目にactiveがついていたら
+  if (slideState.loopCount !== 0 && isFirst(slideState.currentNum) && slideState.images[slideState.currentNum].classList.contains('active')) {
+    slideState.images[slideState.currentNum].classList.remove('active')
+    slideState.dots[slideState.currentNum].classList.remove('active')
+    slideState.currentNum += slideState.nextNum
+    slideState.images[slideState.currentNum].classList.add('active')
+    slideState.dots[slideState.currentNum].classList.add('active')
+    pagination.innerText = `${slideState.currentNum + 1} / ${slideState.images.length}`
+    prevArrow.classList.remove('disabled')
+    return
+  }
+
+  slideState.images[slideState.currentNum].classList.remove('active')
+  slideState.dots[slideState.currentNum].classList.remove('active')
+  slideState.currentNum += slideState.nextNum
+  slideState.images[slideState.currentNum].classList.add('active')
+  slideState.dots[slideState.currentNum].classList.add('active')
+  pagination.innerText = `${slideState.currentNum + 1} / ${slideState.images.length}`
+
+  if (isLast(slideState.currentNum)) {
+    nextArrow.classList.add('disabled')
+  }
+}
+const setIntervalId = setInterval(autoSlideChange, 3000)
