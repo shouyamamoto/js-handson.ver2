@@ -233,8 +233,6 @@ const setIntervalId = setInterval(autoSlideChange, 3000)
 
 const removeActiveClassForImage = (image) => {
   image.classList.remove('active')
-  slideState.images[slideState.currentNum].classList.remove('active')
-  slideState.dots[slideState.currentNum].classList.remove('active')
 }
 const removeActiveClassForDot = (dot) => {
   dot.classList.remove('active')
