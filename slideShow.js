@@ -35,7 +35,7 @@ const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve(myFetch(fetchURL))
-    }, 100)
+    }, 3000)
   })
 }
 
