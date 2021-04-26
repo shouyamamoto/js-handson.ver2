@@ -68,6 +68,7 @@ const createImageList = (slideImages) => {
   })
   slideShow.appendChild(imageListFragment)
 }
+
 const createDotPagination = (slideImages) => {
   const dotPaginationFragment = document.createDocumentFragment()
 
@@ -111,6 +112,7 @@ const attachClickEventForArrows = () => {
     }
   })
 }
+
 const attachClickEventForDot = (dot, currentNum, index) => {
   if (isActive(dot)) {
     return
@@ -155,6 +157,7 @@ const changeImage = (num) => {
     slideState.images[slideState.currentNum].classList.add('active')
   }
 }
+
 const dotClickChangeImage = (num) => {
   slideState.images[slideState.currentNum].classList.remove('active')
   slideState.currentNum = num
