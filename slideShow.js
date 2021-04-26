@@ -11,7 +11,6 @@ const dotPagination = document.getElementById('js-dotPagination')
 
 const slideState = {
   currentNum: 0,
-  paginationInitNum: 1,
   nextNum: 1,
   prevNum: -1,
   loopCount: 0,
@@ -42,7 +41,7 @@ const fetchSlideShowImages = () => {
 const createSlide = async () => {
   const slideImages = await fetchSlideShowImages()
   createImageList(slideImages)
-  createPagination()
+  initPagination()
   createDotPagination(slideImages)
   attachClickEventForArrows()
   nextArrow.classList.add('visible')
@@ -82,8 +81,9 @@ const createDotPagination = (slideImages) => {
   })
   dotPagination.appendChild(dotPaginationFragment)
 }
-const createPagination = () => {
-  pagination.innerText = `${slideState.paginationInitNum} / ${slideState.images.length}`
+const initPagination = () => {
+  const paginationInitNum = 1
+  pagination.innerText = `${paginationInitNum} / ${slideState.images.length}`
 }
 
 const attachClickEventForArrows = () => {
@@ -170,7 +170,7 @@ const resetSlide = () => {
   removeActiveClassForDot(slideState.dots[slideState.currentNum])
   addDisableClassForArrow(nextArrow)
   resetCurrentNum()
-  resetPagination()
+  initPagination()
   loopCountIncrement()
 }
 
@@ -248,9 +248,6 @@ const loopCountIncrement = () => {
 }
 const resetCurrentNum = () => {
   slideState.currentNum = 0
-}
-const resetPagination = () => {
-  pagination.innerText = `${slideState.paginationInitNum} / ${slideState.images.length}`
 }
 const addDisableClassForArrow = (targetArrow) => {
   targetArrow.classList.add('disabled')
