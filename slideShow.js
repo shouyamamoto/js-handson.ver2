@@ -11,7 +11,7 @@ const dotPagination = document.getElementById('js-dotPagination')
 
 const slideState = {
   currentNum: 0,
-  loopCount: 0,
+  setIntervalId: null,
   images: [],
   dots: [],
 }
@@ -32,7 +32,7 @@ const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
       resolve(myFetch(fetchURL))
-    }, 100)
+    }, 3000)
   })
 }
 
@@ -42,6 +42,7 @@ const createSlide = async () => {
   initPagination()
   createDotPagination(slideImages)
   attachClickEventForArrows()
+  startAutoSlide(3000)
   nextArrow.classList.add('visible')
   prevArrow.classList.add('visible')
   prevArrow.classList.add('disabled')
@@ -90,9 +91,10 @@ const attachClickEventForArrows = () => {
     const nextNum = 1
     changeDotPagination(slideState.currentNum, nextNum)
     changeImage(nextNum)
-    changePaginationIncrement(slideState.currentNum)
+    changePagination(slideState.currentNum)
     prevArrow.classList.remove('disabled')
-    clearInterval(setIntervalId)
+    stopAutoSlide()
+    startAutoSlide(3000)
 
     if (isLast(slideState.currentNum)) {
       nextArrow.classList.add('disabled')
@@ -103,9 +105,10 @@ const attachClickEventForArrows = () => {
     const prevNum = -1
     changeDotPagination(slideState.currentNum, prevNum)
     changeImage(prevNum)
-    changePaginationDecrement(slideState.currentNum)
+    changePagination(slideState.currentNum)
     nextArrow.classList.remove('disabled')
-    clearInterval(setIntervalId)
+    stopAutoSlide()
+    startAutoSlide(3000)
 
     if (isFirst(slideState.currentNum)) {
       prevArrow.classList.add('disabled')
@@ -123,28 +126,13 @@ const attachClickEventForDot = (dot, currentNum, index) => {
     slideState.dots[currentNum].classList.add('active')
     dotClickChangeImage(currentNum)
     dotClickChangePagination(currentNum)
-    isFirst(slideState.currentNum) ? addDisableClassForArrow(prevArrow) : removeDisableClassForArrow(prevArrow)
-    isLast(slideState.currentNum) ? addDisableClassForArrow(nextArrow) : removeDisableClassForArrow(nextArrow)
+    isFirst(currentNum) ? prevArrow.classList.add('disabled') : prevArrow.classList.remove('disabled')
+    isLast(currentNum) ? nextArrow.classList.add('disabled') : nextArrow.classList.remove('disabled')
   }
 }
 
-const isLast = (currentNum) => {
-  return currentNum === slideState.images.length - 1
-}
-const isFirst = (currentNum) => {
-  return currentNum === 0
-}
-const isActive = (target) => {
-  return target.classList.contains('active')
-}
-
-const changePaginationIncrement = (currentNum) => {
-  const nextNum = 1
-  pagination.innerText = `${currentNum + nextNum} / ${slideState.images.length}`
-}
-const changePaginationDecrement = (currentNum) => {
-  const prevNum = -1
-  pagination.innerText = `${currentNum - prevNum} / ${slideState.images.length}`
+const changePagination = (currentNum) => {
+  pagination.innerText = `${currentNum + 1} / ${slideState.images.length}`
 }
 const changeDotPagination = (currentNum, num) => {
   slideState.dots[currentNum].classList.remove('active')
@@ -164,103 +152,65 @@ const dotClickChangeImage = (num) => {
   slideState.images[slideState.currentNum].classList.remove('active')
   slideState.currentNum = num
   slideState.images[slideState.currentNum].classList.add('active')
-  clearInterval(setIntervalId)
 }
 const dotClickChangePagination = (currentNum) => {
   pagination.textContent = `${currentNum + 1} / ${slideState.images.length}`
 }
 
-const resetSlide = () => {
-  removeActiveClassForImage(slideState.images[slideState.currentNum])
-  removeActiveClassForDot(slideState.dots[slideState.currentNum])
-  addDisableClassForArrow(nextArrow)
-  resetCurrentNum()
-  initPagination()
-  loopCountIncrement()
-}
+const autoSlide = () => {
+  const _countUp = () => {
+    slideState.currentNum++
+  }
+  const _countReset = () => {
+    slideState.currentNum = 0
+  }
 
-const autoSlideChange = () => {
-  // もし最後のnumならば
   if (isLast(slideState.currentNum)) {
-    resetSlide()
+    removeIsActive(slideState.currentNum)
+    _countReset()
+    addIsActive(slideState.currentNum)
+    initPagination()
+    nextArrow.classList.remove('disabled')
+    prevArrow.classList.add('disabled')
+  } else {
+    removeIsActive(slideState.currentNum)
+    _countUp()
+    addIsActive(slideState.currentNum)
+    changePagination(slideState.currentNum)
   }
 
-  // 初回ループ時
-  if (slideState.loopCount === 0) {
-    removeActiveClassForImage(slideState.images[slideState.currentNum])
-    removeActiveClassForDot(slideState.dots[slideState.currentNum])
-    currentNumIncrement()
-    addActiveClassForImage(slideState.images[slideState.currentNum])
-    addActiveClassForDot(slideState.dots[slideState.currentNum])
-    changePaginationIncrement(slideState.currentNum)
-
-    isFirst(slideState.currentNum) ? addDisableClassForArrow(prevArrow) : removeDisableClassForArrow(prevArrow)
-    isLast(slideState.currentNum) ? addDisableClassForArrow(nextArrow) : removeDisableClassForArrow(nextArrow)
-    return
+  if (!isFirst(slideState.currentNum) || !isLast(slideState.currentNum)) {
+    prevArrow.classList.remove('disabled')
+    nextArrow.classList.remove('disabled')
   }
-
-  // 2回目のループかつ、currentNumが0のとき
-  if (slideState.loopCount > 0 && isFirst(slideState.currentNum)) {
-    // 1枚目の画像にactiveクラスがついているときの処理
-    if (isActive(slideState.images[slideState.currentNum])) {
-      removeActiveClassForImage(slideState.images[slideState.currentNum])
-      removeActiveClassForDot(slideState.dots[slideState.currentNum])
-      currentNumIncrement()
-      addActiveClassForImage(slideState.images[slideState.currentNum])
-      addActiveClassForDot(slideState.dots[slideState.currentNum])
-      changePaginationIncrement(slideState.currentNum)
-      removeDisableClassForArrow(prevArrow)
-      return
-    }
-
-    // 1枚目の画像にactiveクラスがついていないときの処理
-    if (!isActive(slideState.images[slideState.currentNum])) {
-      addActiveClassForImage(slideState.images[slideState.currentNum])
-      addActiveClassForDot(slideState.dots[slideState.currentNum])
-      addDisableClassForArrow(prevArrow)
-      removeDisableClassForArrow(nextArrow)
-      return
-    }
+  if (isLast(slideState.currentNum)) {
+    nextArrow.classList.add('disabled')
   }
-
-  // 2回目以降のループかつ、currentNumが0ではないとき
-  if (slideState.loopCount > 0 && !isFirst(slideState.currentNum)) {
-    removeActiveClassForImage(slideState.images[slideState.currentNum])
-    removeActiveClassForDot(slideState.dots[slideState.currentNum])
-    currentNumIncrement()
-    addActiveClassForImage(slideState.images[slideState.currentNum])
-    addActiveClassForDot(slideState.dots[slideState.currentNum])
-    changePaginationIncrement(slideState.currentNum)
-    isLast(slideState.currentNum) ? addDisableClassForArrow(nextArrow) : null
+  if (isFirst(slideState.currentNum)) {
+    prevArrow.classList.add('disabled')
   }
 }
-const setIntervalId = setInterval(autoSlideChange, 3000)
+const stopAutoSlide = () => {
+  clearInterval(slideState.setIntervalId)
+}
+const startAutoSlide = (time) => {
+  slideState.setIntervalId = setInterval(autoSlide, time)
+}
 
-const removeActiveClassForImage = (image) => {
-  image.classList.remove('active')
+const isLast = (currentNum) => {
+  return currentNum === slideState.images.length - 1
 }
-const removeActiveClassForDot = (dot) => {
-  dot.classList.remove('active')
+const isFirst = (currentNum) => {
+  return currentNum === 0
 }
-const addActiveClassForImage = (image) => {
-  image.classList.add('active')
+const isActive = (target) => {
+  return target.classList.contains('active')
 }
-const addActiveClassForDot = (dot) => {
-  dot.classList.add('active')
+const removeIsActive = (currentNum) => {
+  slideState.dots[currentNum].classList.remove('active')
+  slideState.images[currentNum].classList.remove('active')
 }
-const loopCountIncrement = () => {
-  slideState.loopCount++
-}
-const resetCurrentNum = () => {
-  slideState.currentNum = 0
-}
-const addDisableClassForArrow = (targetArrow) => {
-  targetArrow.classList.add('disabled')
-}
-const removeDisableClassForArrow = (targetArrow) => {
-  targetArrow.classList.remove('disabled')
-}
-const currentNumIncrement = () => {
-  const nextNum = 1
-  slideState.currentNum += nextNum
+const addIsActive = (currentNum) => {
+  slideState.dots[currentNum].classList.add('active')
+  slideState.images[currentNum].classList.add('active')
 }
