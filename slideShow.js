@@ -128,6 +128,8 @@ const attachClickEventForDot = (dot, currentNum, index) => {
     dotClickChangePagination(currentNum)
     isFirst(currentNum) ? prevArrow.classList.add('disabled') : prevArrow.classList.remove('disabled')
     isLast(currentNum) ? nextArrow.classList.add('disabled') : nextArrow.classList.remove('disabled')
+    stopAutoSlide()
+    startAutoSlide(3000)
   }
 }
 
