@@ -52,7 +52,7 @@ createSlide()
 const createImageList = (slideImages) => {
   const imageListFragment = document.createDocumentFragment()
 
-  slideImages.images.map((image, index) => {
+  slideImages.images.forEach((image, index) => {
     const li = document.createElement('li')
     const img = document.createElement('img')
     img.classList.add('slideImage')
