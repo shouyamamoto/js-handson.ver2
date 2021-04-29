@@ -44,6 +44,7 @@ li {
   border-bottom: 20px solid transparent;
   border-right: 20px solid #000;
   opacity: 0;
+  cursor: pointer;
 }
 .nextArrow {
   position: absolute;
@@ -55,6 +56,7 @@ li {
   border-bottom: 20px solid transparent;
   border-left: 20px solid #000;
   opacity: 0;
+  cursor: pointer;
 }
 
 .nextArrow.visible,
@@ -70,8 +72,33 @@ li {
 
 .pagination {
   position: absolute;
-  bottom: -60px;
+
+  bottom: -80px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+
+.dotPagination {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dotPagination > span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dotPagination > span:not(:last-child) {
+  margin-right: 10px;
+}
+.dotPagination > span.active {
+  background-color: #da5040;
+  border: 1px solid #da5040;
 }
