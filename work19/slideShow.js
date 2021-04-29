@@ -1,5 +1,5 @@
 // json取得先
-const fetchURL = 'https://jsondata.okiba.me/v1/json/Kto6o210429123917'
+const fetchSlideURL = 'https://jsondata.okiba.me/v1/json/Kto6o210429123917'
 
 // DOMの取得
 const slideShow = document.getElementById('js-slideShow')
@@ -31,7 +31,7 @@ const myFetch = async (fetchURL) => {
 const fetchSlideShowImages = () => {
   return new Promise((resolve) => {
     setTimeout(function () {
-      resolve(myFetch(fetchURL))
+      resolve(myFetch(fetchSlideURL))
     }, 3000)
   })
 }

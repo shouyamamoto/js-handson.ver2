@@ -1,5 +1,5 @@
 // fetchするJSON
-const fetchURL2 = 'https://jsondata.okiba.me/v1/json/s0u4K210429123253'
+const fetchContentsURL2 = 'https://jsondata.okiba.me/v1/json/s0u4K210429123253'
 
 // 現在日時を取得
 const dayDate = new Date()
@@ -71,7 +71,7 @@ async function init(url) {
   } catch (e) {
     console.log(e);
   } finally {
-    console.log('init run');
+    console.log('init executed');
   }
 
   createTabs(articles)
@@ -79,7 +79,7 @@ async function init(url) {
   createImages(articles)
   checkContentsIsInit(articles)
 }
-init(fetchURL2)
+init(fetchContentsURL2)
 
 function createTabs(articles) {
   const tabFrag = document.createDocumentFragment()
