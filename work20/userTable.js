@@ -60,14 +60,17 @@ function checkColumn(users, columns) {
 
 // ユーザが持っているkeyを表示したいカラム名に変換して返す
 function changeColumnName(column) {
-  if (column === 'id') {
-    return 'ID'
-  } else if (column === 'name') {
-    return '名前'
-  } else if (column === 'age') {
-    return '年齢'
-  } else if (column === 'sex') {
-    return '性別'
+  switch (column) {
+    case "id":
+      return "ID";
+    case "name":
+      return "名前";
+    case "age":
+      return "年齢";
+    case "sex":
+      return "性別";
+    default:
+      console.error(`not provided ${column}`);
   }
 }
 
