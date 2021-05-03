@@ -1,4 +1,4 @@
-const fetchUsersURL = "https://jsondata.okiba.me/v1/json/g0Ew3210429224626"
+const fetchUsersURL = "https://jsondata.okiba.me/v1/json/XWziO210503032750"
 
 const userTable = document.getElementById('userTable')
 
@@ -24,34 +24,44 @@ const fetchUserData = () => {
 
 const createUserTable = async () => {
   const userData = await fetchUserData()
+  const { users, columns } = userData
+  createColumn(columns)
+  createUsers(users)
+}
+createUserTable()
+
+// カラムを生成する処理
+function createColumn(columns) {
+  const columnFragment = document.createDocumentFragment()
+  const columnTr = document.createElement('tr')
+  columnTr.classList.add('t-head')
+
+  columns.forEach(column => {
+    const columnTh = document.createElement('th')
+    columnTh.textContent = column
+    columnFragment.appendChild(columnTh)
+  })
+
+  columnTr.appendChild(columnFragment)
+  userTable.appendChild(columnTr)
+}
+
+// ユーザを生成する処理
+function createUsers(users) {
   const userDataFragment = document.createDocumentFragment()
 
-  const tr = document.createElement('tr')
-  const thId = document.createElement('th')
-  const thName = document.createElement('th')
-  const thSex = document.createElement('th')
-  const thAge = document.createElement('th')
-  tr.classList.add('t-head')
-  thId.textContent = 'ID'
-  thName.textContent = '名前'
-  thSex.textContent = '性別'
-  thAge.textContent = '年齢'
-  tr.appendChild(thId)
-  tr.appendChild(thName)
-  tr.appendChild(thSex)
-  tr.appendChild(thAge)
-
-  userData.users.forEach(user => {
+  users.forEach(user => {
     const tr = document.createElement('tr')
     const tdId = document.createElement('td')
     const tdName = document.createElement('td')
     const tdSex = document.createElement('td')
     const tdAge = document.createElement('td')
 
-    tdId.textContent = user.id
-    tdName.textContent = user.name
-    tdSex.textContent = user.sex
-    tdAge.textContent = user.age
+    const { id, name, sex, age } = user
+    tdId.textContent = id
+    tdName.textContent = name
+    tdSex.textContent = sex
+    tdAge.textContent = age
 
     tr.appendChild(tdId)
     tr.appendChild(tdName)
@@ -60,8 +70,5 @@ const createUserTable = async () => {
 
     userDataFragment.appendChild(tr)
   })
-
-  userTable.appendChild(tr)
   userTable.appendChild(userDataFragment)
 }
-createUserTable()
