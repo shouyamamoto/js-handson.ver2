@@ -47,7 +47,11 @@ function createColumn(users) {
     const columnTh = document.createElement('th')
     columnTh.textContent = changeColumnName(column)
     if (column === 'id') {
-      sortArrowForId(users, columnTh)
+      const arrowImg = document.createElement('img')
+      arrowImg.src = sortArrows.both
+      arrowImg.classList.add('sortArrow')
+      columnTh.appendChild(arrowImg)
+      sortId(users, arrowImg)
     }
     columnFragment.appendChild(columnTh)
   })
@@ -56,10 +60,8 @@ function createColumn(users) {
   userTable.appendChild(columnTr)
 }
 
-function sortArrowForId(users, columnTh) {
-  const arrowImg = document.createElement('img')
-  arrowImg.src = sortArrows.both
-  arrowImg.classList.add('sortArrow')
+// IDでソートする関数
+function sortId(users, arrowImg) {
   let sortState = 'BOTH'
 
   arrowImg.addEventListener('click', () => {
@@ -77,14 +79,12 @@ function sortArrowForId(users, columnTh) {
       arrowImg.src = sortArrows.both
     }
 
-    const targetChildren = document.querySelectorAll('.userData')
+    const targetChildren = document.querySelectorAll('.user')
     targetChildren.forEach(targetChild => {
       userTable.removeChild(targetChild)
     })
     createUsers(sortUsers)
   })
-
-  columnTh.appendChild(arrowImg)
 }
 
 function sortIdDesc(a, b) {
@@ -119,7 +119,7 @@ function createUsers(users) {
   const userDataFragment = document.createDocumentFragment()
   users.forEach(user => {
     const tr = document.createElement('tr')
-    tr.classList.add('userData')
+    tr.classList.add('user')
     const tdId = document.createElement('td')
     const tdName = document.createElement('td')
     const tdSex = document.createElement('td')
