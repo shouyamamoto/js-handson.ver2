@@ -25,7 +25,7 @@ const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(myFetch(fetchUsersURL))
-    }, 100)
+    }, 3000)
   })
 }
 
