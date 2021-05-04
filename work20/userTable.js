@@ -18,41 +18,7 @@ const myFetch = async (fetchUsersURL) => {
 const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({
-        users: [
-          {
-            id: 1,
-            name: "やまだ",
-            sex: "男性",
-            age: 32
-          },
-          {
-            id: 2,
-            name: "さとう",
-            sex: "女性",
-            age: 18
-          },
-          {
-            id: 3,
-            name: "たなか",
-            sex: "男性",
-            age: 25
-          },
-          {
-            id: 4,
-            name: "あんどう",
-            sex: "女性",
-            age: 48
-          },
-          {
-            id: 5,
-            name: "えのもと",
-            sex: "女性",
-            age: 36,
-            ee: 333
-          }
-        ]
-      })
+      resolve(myFetch(fetchUsersURL))
     }, 3000)
   })
 }
@@ -60,19 +26,17 @@ const fetchUserData = () => {
 const createUserTable = async () => {
   const userData = await fetchUserData()
   const users = await userData.users
-  createColumn(users)
+  createColumn()
   createUsers(users)
 }
 createUserTable()
 
 // カラムを生成する処理
-function createColumn(users) {
+function createColumn() {
   const columnFragment = document.createDocumentFragment()
   const columnTr = document.createElement('tr')
-  let columns = []
-  columns = checkColumn(users, columns)
   columnTr.classList.add('t-head')
-  columns.forEach(column => {
+  requiredColumns.forEach(column => {
     const columnTh = document.createElement('th')
     columnTh.textContent = changeColumnName(column)
     columnFragment.appendChild(columnTh)
@@ -81,19 +45,7 @@ function createColumn(users) {
   userTable.appendChild(columnTr)
 }
 
-// 表示したいカラムと、userが持っているkeysが同じかをチェックする
-function checkColumn(users, columns) {
-  users.forEach(user => {
-    const userKeys = Object.keys(user)
-    if (userKeys.toString() === requiredColumns.toString()) { // 表示したいカラムと、userが持っているkeysが同じであればそれをcolumnへ
-      console.log(userKeys.toString() === requiredColumns.toString())
-      columns = userKeys
-    }
-  })
-  return columns
-}
-
-// ユーザが持っているkeyを表示したいカラム名に変換して返す
+// 表示したいカラム名に変換して返す
 function changeColumnName(column) {
   switch (column) {
     case "id":
