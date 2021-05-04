@@ -1,0 +1,25 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.userTable__container {
+  width: 40vw;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.t-head {
+  background-color: #da5040;
+  color: #fff;
+}
+
+th,
+td {
+  padding: 10px;
+}
