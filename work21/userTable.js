@@ -1,4 +1,4 @@
-const fetchUsersURL = "https://jsondata.okiba.me/v1/json/5DuLV210504092656"
+const fetchUsersURL = "https://jsondata.okiba.me/v1/json/mMhP9210504160147"
 
 const userTable = document.getElementById('userTable')
 const requiredColumns = ["id", "name", "sex", "age"] // 表示したいカラム
@@ -25,7 +25,7 @@ const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(myFetch(fetchUsersURL))
-    }, 3000)
+    }, 100)
   })
 }
 
@@ -33,26 +33,21 @@ const createUserTable = async () => {
   const userData = await fetchUserData()
   const users = await userData.users
   createColumn(users)
+  addSortArrowForTh('id', users)
   createUsers(users)
 }
 createUserTable()
 
 // カラムを生成する処理
-function createColumn(users) {
+function createColumn() {
   const columnFragment = document.createDocumentFragment()
   const columnTr = document.createElement('tr')
   columnTr.classList.add('t-head')
 
   requiredColumns.forEach(column => {
     const columnTh = document.createElement('th')
+    columnTh.id = column
     columnTh.textContent = changeColumnName(column)
-    if (column === 'id') {
-      const arrowImg = document.createElement('img')
-      arrowImg.src = sortArrows.both
-      arrowImg.classList.add('sortArrow')
-      columnTh.appendChild(arrowImg)
-      sortId(users, arrowImg)
-    }
     columnFragment.appendChild(columnTh)
   })
 
@@ -60,19 +55,29 @@ function createColumn(users) {
   userTable.appendChild(columnTr)
 }
 
-// IDでソートする関数
-function sortId(users, arrowImg) {
+// thにsortArrowを追加する
+function addSortArrowForTh(key, users) {
+  const arrowImg = document.createElement('img')
+  const sortElement = document.getElementById(key)
+  arrowImg.src = sortArrows.both
+  arrowImg.classList.add('sortArrow')
+  sort(users, arrowImg, key)
+  sortElement.appendChild(arrowImg)
+}
+
+// ソートする関数
+function sort(users, arrowImg, key) {
   let sortState = 'BOTH'
 
   arrowImg.addEventListener('click', () => {
     sortUsers = [...users]
     if (sortState === 'BOTH') {
       sortState = 'ASC'
-      sortUsers.sort(sortIdAsc)
+      sortUsers.sort(sortAsc(key))
       arrowImg.src = sortArrows.asc
     } else if (sortState === 'ASC') {
       sortState = 'DESC'
-      sortUsers.sort(sortIdDesc)
+      sortUsers.sort(sortDesc(key))
       arrowImg.src = sortArrows.desc
     } else if (sortState === 'DESC') {
       sortState = 'BOTH'
@@ -87,15 +92,19 @@ function sortId(users, arrowImg) {
   })
 }
 
-function sortIdDesc(a, b) {
-  if (a.id > b.id) return -1
-  if (a.id < b.id) return 1
-  return 0
+function sortDesc(key) {
+  return (a, b) => {
+    if (a[key] > b[key]) return -1
+    if (a[key] < b[key]) return 1
+    return 0
+  }
 }
-function sortIdAsc(a, b) {
-  if (a.id < b.id) return -1
-  if (a.id > b.id) return 1
-  return 0
+function sortAsc(key) {
+  return (a, b) => {
+    if (a[key] < b[key]) return -1
+    if (a[key] > b[key]) return 1
+    return 0
+  }
 }
 
 // 表示したいカラム名に変換して返す
