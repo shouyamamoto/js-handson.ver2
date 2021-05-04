@@ -8,7 +8,6 @@ const sortArrows = {
   both: './images/both.svg',
   desc: './images/desc.svg'
 }
-let sortState = 'BOTH'
 
 const myFetch = async (fetchUsersURL) => {
   try {
@@ -26,7 +25,7 @@ const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(myFetch(fetchUsersURL))
-    }, 100)
+    }, 3000)
   })
 }
 
@@ -43,6 +42,7 @@ function createColumn(users) {
   const columnFragment = document.createDocumentFragment()
   const columnTr = document.createElement('tr')
   columnTr.classList.add('t-head')
+
   requiredColumns.forEach(column => {
     const columnTh = document.createElement('th')
     columnTh.textContent = changeColumnName(column)
@@ -51,6 +51,7 @@ function createColumn(users) {
     }
     columnFragment.appendChild(columnTh)
   })
+
   columnTr.appendChild(columnFragment)
   userTable.appendChild(columnTr)
 }
@@ -59,38 +60,42 @@ function sortArrowForId(users, columnTh) {
   const arrowImg = document.createElement('img')
   arrowImg.src = sortArrows.both
   arrowImg.classList.add('sortArrow')
+  let sortState = 'BOTH'
+
   arrowImg.addEventListener('click', () => {
     sortUsers = [...users]
     if (sortState === 'BOTH') {
       sortState = 'ASC'
-      sortUsers.sort(sortAscId)
+      sortUsers.sort(sortIdAsc)
       arrowImg.src = sortArrows.asc
     } else if (sortState === 'ASC') {
       sortState = 'DESC'
-      sortUsers.sort(sortDescId)
+      sortUsers.sort(sortIdDesc)
       arrowImg.src = sortArrows.desc
     } else if (sortState === 'DESC') {
       sortState = 'BOTH'
       arrowImg.src = sortArrows.both
     }
+
     const targetChildren = document.querySelectorAll('.userData')
     targetChildren.forEach(targetChild => {
       userTable.removeChild(targetChild)
     })
     createUsers(sortUsers)
   })
+
   columnTh.appendChild(arrowImg)
 }
 
-function sortDescId(a, b) {
+function sortIdDesc(a, b) {
   if (a.id > b.id) return -1
   if (a.id < b.id) return 1
-  return 0, sortState
+  return 0
 }
-function sortAscId(a, b) {
+function sortIdAsc(a, b) {
   if (a.id < b.id) return -1
   if (a.id > b.id) return 1
-  return 0, sortState
+  return 0
 }
 
 // 表示したいカラム名に変換して返す
