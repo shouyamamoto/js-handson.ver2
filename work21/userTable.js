@@ -2,6 +2,15 @@ const fetchUsersURL = "https://jsondata.okiba.me/v1/json/kscum210503062703"
 
 const userTable = document.getElementById('userTable')
 const requiredColumns = ["id", "name", "sex", "age"] // 表示したいカラム
+const ascArrow = './images/asc.svg'
+const bothArrow = './images/both.svg'
+const descArrow = './images/desc.svg'
+
+const arrows = {
+  asc: './images/asc.svg',
+  both: './images/both.svg',
+  desc: './images/desc.svg'
+}
 
 const myFetch = async (fetchUsersURL) => {
   try {
@@ -19,7 +28,7 @@ const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(myFetch(fetchUsersURL))
-    }, 3000)
+    }, 100)
   })
 }
 
@@ -39,6 +48,12 @@ function createColumn() {
   requiredColumns.forEach(column => {
     const columnTh = document.createElement('th')
     columnTh.textContent = changeColumnName(column)
+    if (column === 'id') {
+      const arrowImg = document.createElement('img')
+      arrowImg.src = arrows.asc
+      arrowImg.classList.add('sortArrow')
+      columnTh.appendChild(arrowImg)
+    }
     columnFragment.appendChild(columnTh)
   })
   columnTr.appendChild(columnFragment)
