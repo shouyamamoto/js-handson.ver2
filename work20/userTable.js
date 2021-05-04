@@ -18,8 +18,42 @@ const myFetch = async (fetchUsersURL) => {
 const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(myFetch(fetchUsersURL))
-    }, 100)
+      resolve({
+        users: [
+          {
+            id: 1,
+            name: "やまだ",
+            sex: "男性",
+            age: 32
+          },
+          {
+            id: 2,
+            name: "さとう",
+            sex: "女性",
+            age: 18
+          },
+          {
+            id: 3,
+            name: "たなか",
+            sex: "男性",
+            age: 25
+          },
+          {
+            id: 4,
+            name: "あんどう",
+            sex: "女性",
+            age: 48
+          },
+          {
+            id: 5,
+            name: "えのもと",
+            sex: "女性",
+            age: 36,
+            ee: 333
+          }
+        ]
+      })
+    }, 3000)
   })
 }
 
@@ -51,7 +85,8 @@ function createColumn(users) {
 function checkColumn(users, columns) {
   users.forEach(user => {
     const userKeys = Object.keys(user)
-    if (userKeys.toString === requiredColumns.toString) { // 表示したいカラムと、userが持っているkeysが同じであればそれをcolumnへ
+    if (userKeys.toString() === requiredColumns.toString()) { // 表示したいカラムと、userが持っているkeysが同じであればそれをcolumnへ
+      console.log(userKeys.toString() === requiredColumns.toString())
       columns = userKeys
     }
   })
