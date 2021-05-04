@@ -1,16 +1,14 @@
-const fetchUsersURL = "https://jsondata.okiba.me/v1/json/kscum210503062703"
+const fetchUsersURL = "https://jsondata.okiba.me/v1/json/5DuLV210504092656"
 
 const userTable = document.getElementById('userTable')
 const requiredColumns = ["id", "name", "sex", "age"] // 表示したいカラム
-const ascArrow = './images/asc.svg'
-const bothArrow = './images/both.svg'
-const descArrow = './images/desc.svg'
 
-const arrows = {
+const sortArrows = {
   asc: './images/asc.svg',
   both: './images/both.svg',
   desc: './images/desc.svg'
 }
+let sortState = 'BOTH'
 
 const myFetch = async (fetchUsersURL) => {
   try {
@@ -35,13 +33,13 @@ const fetchUserData = () => {
 const createUserTable = async () => {
   const userData = await fetchUserData()
   const users = await userData.users
-  createColumn()
+  createColumn(users)
   createUsers(users)
 }
 createUserTable()
 
 // カラムを生成する処理
-function createColumn() {
+function createColumn(users) {
   const columnFragment = document.createDocumentFragment()
   const columnTr = document.createElement('tr')
   columnTr.classList.add('t-head')
@@ -49,15 +47,50 @@ function createColumn() {
     const columnTh = document.createElement('th')
     columnTh.textContent = changeColumnName(column)
     if (column === 'id') {
-      const arrowImg = document.createElement('img')
-      arrowImg.src = arrows.asc
-      arrowImg.classList.add('sortArrow')
-      columnTh.appendChild(arrowImg)
+      sortArrowForId(users, columnTh)
     }
     columnFragment.appendChild(columnTh)
   })
   columnTr.appendChild(columnFragment)
   userTable.appendChild(columnTr)
+}
+
+function sortArrowForId(users, columnTh) {
+  const arrowImg = document.createElement('img')
+  arrowImg.src = sortArrows.both
+  arrowImg.classList.add('sortArrow')
+  arrowImg.addEventListener('click', () => {
+    sortUsers = [...users]
+    if (sortState === 'BOTH') {
+      sortState = 'ASC'
+      sortUsers.sort(sortAscId)
+      arrowImg.src = sortArrows.asc
+    } else if (sortState === 'ASC') {
+      sortState = 'DESC'
+      sortUsers.sort(sortDescId)
+      arrowImg.src = sortArrows.desc
+    } else if (sortState === 'DESC') {
+      sortState = 'BOTH'
+      arrowImg.src = sortArrows.both
+    }
+    const targetChildren = document.querySelectorAll('.userData')
+    targetChildren.forEach(targetChild => {
+      userTable.removeChild(targetChild)
+    })
+    createUsers(sortUsers)
+  })
+  columnTh.appendChild(arrowImg)
+}
+
+function sortDescId(a, b) {
+  if (a.id > b.id) return -1
+  if (a.id < b.id) return 1
+  return 0, sortState
+}
+function sortAscId(a, b) {
+  if (a.id < b.id) return -1
+  if (a.id > b.id) return 1
+  return 0, sortState
 }
 
 // 表示したいカラム名に変換して返す
@@ -81,6 +114,7 @@ function createUsers(users) {
   const userDataFragment = document.createDocumentFragment()
   users.forEach(user => {
     const tr = document.createElement('tr')
+    tr.classList.add('userData')
     const tdId = document.createElement('td')
     const tdName = document.createElement('td')
     const tdSex = document.createElement('td')
