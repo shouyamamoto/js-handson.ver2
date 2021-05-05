@@ -34,6 +34,7 @@ const createUserTable = async () => {
   const users = await userData.users
   createColumn(users)
   addSortArrowForTh('id', users)
+  addSortArrowForTh('age', users)
   createUsers(users)
 }
 createUserTable()
