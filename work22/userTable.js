@@ -76,7 +76,7 @@ function addSortArrowForTh(key, users) {
 function sort(users, arrowImg, key) {
   arrowImg.addEventListener('click', () => {
     sortUsers = [...users]
-    clearSort(key)
+    resetSort(key)
 
     if (sortStates[key] === 'BOTH') {
       sortStates[key] = 'ASC'
@@ -98,7 +98,7 @@ function sort(users, arrowImg, key) {
   })
 }
 
-function clearSort(key) {
+function resetSort(key) {
   const _arrowReset = (resetTargetKey) => {
     resetTargetArrow = document.getElementById(`${resetTargetKey}Arrow`)
     resetTargetArrow.src = sortArrows.both
