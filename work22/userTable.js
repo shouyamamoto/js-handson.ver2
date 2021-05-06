@@ -9,6 +9,11 @@ const sortArrows = {
   desc: './images/desc.svg'
 }
 
+const sortStates = {
+  id: 'BOTH',
+  age: 'BOTH'
+}
+
 const myFetch = async (fetchUsersURL) => {
   try {
     const res = await fetch(fetchUsersURL)
@@ -25,7 +30,7 @@ const fetchUserData = () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(myFetch(fetchUsersURL))
-    }, 3000)
+    }, 100)
   })
 }
 
@@ -62,35 +67,52 @@ function addSortArrowForTh(key, users) {
   const sortElement = document.getElementById(key)
   arrowImg.src = sortArrows.both
   arrowImg.classList.add('sortArrow')
+  arrowImg.id = `${key}Arrow`
   sort(users, arrowImg, key)
   sortElement.appendChild(arrowImg)
 }
 
 // ソートする関数
 function sort(users, arrowImg, key) {
-  let sortState = 'BOTH'
-
   arrowImg.addEventListener('click', () => {
     sortUsers = [...users]
-    if (sortState === 'BOTH') {
-      sortState = 'ASC'
+    clearSort(key)
+
+    if (sortStates[key] === 'BOTH') {
+      sortStates[key] = 'ASC'
       sortUsers.sort(sortAsc(key))
       arrowImg.src = sortArrows.asc
-    } else if (sortState === 'ASC') {
-      sortState = 'DESC'
+    } else if (sortStates[key] === 'ASC') {
+      sortStates[key] = 'DESC'
       sortUsers.sort(sortDesc(key))
       arrowImg.src = sortArrows.desc
-    } else if (sortState === 'DESC') {
-      sortState = 'BOTH'
+    } else if (sortStates[key] === 'DESC') {
+      sortStates[key] = 'BOTH'
       arrowImg.src = sortArrows.both
     }
-
     const targetChildren = document.querySelectorAll('.user')
     targetChildren.forEach(targetChild => {
       userTable.removeChild(targetChild)
     })
     createUsers(sortUsers)
   })
+}
+
+function clearSort(key) {
+  const _arrowReset = (resetTargetKey) => {
+    resetTargetArrow = document.getElementById(`${resetTargetKey}Arrow`)
+    resetTargetArrow.src = sortArrows.both
+    sortStates[resetTargetKey] = 'BOTH'
+  }
+
+  switch (key) {
+    case "id":
+      _arrowReset('age');
+      break
+    case "age":
+      _arrowReset('id');
+      break
+  }
 }
 
 function sortDesc(key) {
