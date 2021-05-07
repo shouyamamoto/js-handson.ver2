@@ -9,9 +9,15 @@ const sortArrows = {
   desc: './images/desc.svg'
 }
 
+const Sort = {
+  BOTH: 'both',
+  ASC: 'asc',
+  DESC: 'desc'
+}
+
 const sortStates = {
-  id: 'BOTH',
-  age: 'BOTH'
+  id: Sort.BOTH,
+  age: Sort.BOTH
 }
 
 const myFetch = async (fetchUsersURL) => {
