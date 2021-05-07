@@ -84,16 +84,16 @@ function sort(users, arrowImg, key) {
     sortUsers = [...users]
     resetSort(key)
 
-    if (sortStates[key] === 'BOTH') {
-      sortStates[key] = 'ASC'
+    if (sortStates[key] === Sort.BOTH) {
+      sortStates[key] = Sort.ASC
       sortUsers.sort(sortAsc(key))
       arrowImg.src = sortArrows.asc
-    } else if (sortStates[key] === 'ASC') {
-      sortStates[key] = 'DESC'
+    } else if (sortStates[key] === Sort.ASC) {
+      sortStates[key] = Sort.DESC
       sortUsers.sort(sortDesc(key))
       arrowImg.src = sortArrows.desc
-    } else if (sortStates[key] === 'DESC') {
-      sortStates[key] = 'BOTH'
+    } else if (sortStates[key] === Sort.DESC) {
+      sortStates[key] = Sort.BOTH
       arrowImg.src = sortArrows.both
     }
     const targetChildren = document.querySelectorAll('.user')
@@ -108,7 +108,7 @@ function resetSort(key) {
   const _arrowReset = (resetTargetKey) => {
     resetTargetArrow = document.getElementById(`${resetTargetKey}Arrow`)
     resetTargetArrow.src = sortArrows.both
-    sortStates[resetTargetKey] = 'BOTH'
+    sortStates[resetTargetKey] = Sort.BOTH
   }
 
   switch (key) {
