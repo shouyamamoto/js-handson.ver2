@@ -119,7 +119,9 @@ button:hover {
   padding: 0;
   display: none;
 }
-
 .mask.active {
   display: block;
+}
+.agreeText {
+  display: inline-block;
 }

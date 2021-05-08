@@ -1,12 +1,12 @@
 const modal = document.getElementById('js-modal')
 const mask = document.getElementById('js-mask')
 const checkbox = document.getElementById('js-checkbox')
-const checkText = document.getElementById('js-checkText')
+const agreeText = document.getElementById('js-agreeText')
 const closeIcon = document.getElementById('js-closeIcon')
 const closeBtn = document.getElementById('js-closeBtn')
 const submitBtn = document.getElementById('js-submitBtn')
 
-checkText.addEventListener('click', () => {
+agreeText.addEventListener('click', () => {
   modalOpen()
 })
 
