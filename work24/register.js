@@ -6,17 +6,11 @@ const closeIcon = document.getElementById('js-closeIcon')
 const closeBtn = document.getElementById('js-closeBtn')
 const submitBtn = document.getElementById('js-submitBtn')
 
-agreeText.addEventListener('click', () => {
-  modalOpen()
-})
+agreeText.addEventListener('click', modalOpen)
 
-closeIcon.addEventListener('click', () => {
-  modalClose()
-})
+closeIcon.addEventListener('click', modalClose)
 
-closeBtn.addEventListener('click', () => {
-  modalClose()
-})
+closeBtn.addEventListener('click', modalClose)
 
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault()
@@ -28,9 +22,9 @@ submitBtn.addEventListener('click', (e) => {
 })
 
 modal.onscroll = function () {
-  const modalHeight = modal.clientHeight
-  const modalScrollHeight = modal.scrollHeight
-  const modalScrollTop = modal.scrollTop
+  const modalHeight = this.clientHeight
+  const modalScrollHeight = this.scrollHeight
+  const modalScrollTop = this.scrollTop
 
   if (modalScrollHeight - (modalHeight + modalScrollTop) === 0) {
     checkbox.disabled = false
