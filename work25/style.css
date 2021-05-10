@@ -33,7 +33,7 @@ label {
 
 input {
   font: 1em sans-serif;
-  width: 300px;
+  width: 70%;
   box-sizing: border-box;
   border: 1px solid #999;
 }
@@ -107,6 +107,9 @@ button:hover {
 .closeBtn {
   margin-top: 40px;
 }
+.submitBtn:disabled {
+  background-color: #ccc;
+}
 .mask {
   display: block;
   width: 100%;
@@ -124,4 +127,10 @@ button:hover {
 }
 .agreeText {
   display: inline-block;
+}
+.errorMessage {
+  color: #da5040;
+  display: block;
+  text-decoration: none;
+  text-align: right;
 }

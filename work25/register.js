@@ -5,6 +5,32 @@ const agreeText = document.getElementById('js-agreeText')
 const closeIcon = document.getElementById('js-closeIcon')
 const closeBtn = document.getElementById('js-closeBtn')
 const submitBtn = document.getElementById('js-submitBtn')
+const userName = document.getElementById('userName')
+
+userName.addEventListener('input', () => {
+  const inputUserName = userName.value
+  const result = nameLengthCheck(inputUserName)
+  const errorMessage = document.getElementById('userNameErrorMessage')
+
+  if (result) {
+    errorMessage && errorMessage.remove()
+  } else {
+    errorMessage || errorMessageShow()
+  }
+})
+
+const errorMessageShow = () => {
+  const errorMessage = document.createElement('span')
+  errorMessage.textContent = '※15文字以下にしてください'
+  errorMessage.classList.add('errorMessage')
+  errorMessage.id = 'userNameErrorMessage'
+  userName.parentNode.appendChild(errorMessage)
+}
+
+const nameLengthCheck = (inputUserName) => {
+  const maxLength = 16
+  return inputUserName.length < maxLength
+}
 
 agreeText.addEventListener('click', modalOpen)
 
@@ -29,6 +55,7 @@ modal.onscroll = function () {
   if (modalScrollHeight - (modalHeight + modalScrollTop) === 0) {
     checkbox.disabled = false
     checkbox.checked = true
+    submitBtn.disabled = false
   }
 }
 
@@ -43,3 +70,4 @@ function modalOpen() {
   mask.classList.add('active')
   closeIcon.classList.add('active')
 }
+
