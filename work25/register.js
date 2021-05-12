@@ -36,6 +36,8 @@ userName.addEventListener('input', () => {
     userNameErrorMessage || errorMessage(userName)
     formFrag.userName = false
   }
+
+  submitBtnFrag()
 })
 
 mail.addEventListener('blur', () => {
@@ -50,6 +52,8 @@ mail.addEventListener('blur', () => {
     mailErrorMessage || errorMessage(mail)
     formFrag.mail = false
   }
+
+  submitBtnFrag()
 })
 
 password.addEventListener('blur', () => {
@@ -64,12 +68,14 @@ password.addEventListener('blur', () => {
     passwordErrorMessage || errorMessage(password)
     formFrag.password = false
   }
+
+  submitBtnFrag()
 })
 
 /**
  * 各フォームのバリデーション
  * ユーザ名： 
-    - 16文字未満
+    - 1文字以上、16文字未満
  * メールアドレス： softbankを参考（https://www.softbank.jp/support/faq/view/10544）
     - ひとつ目の文字は、アルファベットまたは数字のみ
     - 文字数は、3文字以上30文字以内
@@ -78,8 +84,9 @@ password.addEventListener('blur', () => {
     - 8文字以上の大小の英数字を交ぜたもの
  */
 const nameLengthCheck = (inputUserName) => {
+  const minLength = 1
   const maxLength = 15
-  return inputUserName.length <= maxLength
+  return inputUserName.length >= minLength && inputUserName.length <= maxLength
 }
 
 const mailCheck = (inputMail) => {
@@ -95,26 +102,56 @@ const passwordCheck = (inputPassword) => {
 }
 
 // エラーメッセージの出力
-const errorMessage = (input) => {
+const errorMessage = (inputField) => {
   const errorMessage = document.createElement('span')
   errorMessage.classList.add('errorMessage')
 
-  switch (input) {
+  switch (inputField) {
     case userName:
-      errorMessage.id = `userNameErrorMessage`
-      errorMessage.textContent = '※15文字以下にしてください'
+      errorMessage.id = 'userNameErrorMessage'
+      errorMessage.textContent = '※ユーザ名は1文字以上、15文字以下にしてください'
       break
     case mail:
-      errorMessage.id = `mailErrorMessage`
+      errorMessage.id = 'mailErrorMessage'
       errorMessage.textContent = '※メールアドレスの形式になっていません'
       break
     case password:
-      errorMessage.id = `passwordErrorMessage`
+      errorMessage.id = 'passwordErrorMessage'
       errorMessage.textContent = '※8文字以上の大小の英数字を交ぜたものにしてください'
       break
   }
 
-  input.parentNode.appendChild(errorMessage)
+  inputField.parentNode.appendChild(errorMessage)
+}
+
+const modalClose = () => {
+  modal.classList.remove('active')
+  mask.classList.remove('active')
+  closeIcon.classList.remove('active')
+}
+
+const modalOpen = () => {
+  modal.classList.add('active')
+  mask.classList.add('active')
+  closeIcon.classList.add('active')
+}
+
+/**
+ *  formFragがすべてtrueか、利用規約を最後まで読んだか を確認する関数
+ *  各フォーム入力時と利用規約を最後まで読んだ時に実行
+ *  全てtrueならsubmitBtnのdisabledを削除、ひとつでもfalseであればdisable付与
+ */
+const submitBtnFrag = () => {
+  if (
+    checkbox.checked === true &&
+    formFrag.userName === true &&
+    formFrag.mail === true &&
+    formFrag.password === true
+  ) {
+    submitBtn.disabled = false
+  } else {
+    submitBtn.disabled = true
+  }
 }
 
 agreeText.addEventListener('click', modalOpen)
@@ -127,8 +164,6 @@ submitBtn.addEventListener('click', (e) => {
   e.preventDefault()
   if (checkbox.checked) {
     location.href = './register-done.html'
-  } else {
-    alert('利用規約を最後まで読んでから送信ボタンを押してください')
   }
 })
 
@@ -140,19 +175,6 @@ modal.onscroll = function () {
   if (modalScrollHeight - (modalHeight + modalScrollTop) === 0) {
     checkbox.disabled = false
     checkbox.checked = true
-    submitBtn.disabled = false
+    submitBtnFrag()
   }
 }
-
-function modalClose() {
-  modal.classList.remove('active')
-  mask.classList.remove('active')
-  closeIcon.classList.remove('active')
-}
-
-function modalOpen() {
-  modal.classList.add('active')
-  mask.classList.add('active')
-  closeIcon.classList.add('active')
-}
-
