@@ -12,7 +12,8 @@ const userName = document.getElementById('userName')
 const mail = document.getElementById('mail')
 const password = document.getElementById('password')
 
-const formFrag = {
+const flags = {
+  checkbox: false,
   userName: false,
   mail: false,
   password: false
@@ -31,13 +32,13 @@ userName.addEventListener('input', () => {
 
   if (result) {
     userNameErrorMessage && userNameErrorMessage.remove()
-    formFrag.userName = true
+    flags.userName = true
   } else {
     userNameErrorMessage || errorMessage(userName)
-    formFrag.userName = false
+    flags.userName = false
   }
 
-  submitBtnFrag()
+  submitBtnFlag()
 })
 
 mail.addEventListener('blur', () => {
@@ -47,13 +48,13 @@ mail.addEventListener('blur', () => {
 
   if (result) {
     mailErrorMessage && mailErrorMessage.remove()
-    formFrag.mail = true
+    flags.mail = true
   } else {
     mailErrorMessage || errorMessage(mail)
-    formFrag.mail = false
+    flags.mail = false
   }
 
-  submitBtnFrag()
+  submitBtnFlag()
 })
 
 password.addEventListener('blur', () => {
@@ -63,13 +64,13 @@ password.addEventListener('blur', () => {
 
   if (result) {
     passwordErrorMessage && passwordErrorMessage.remove()
-    formFrag.password = true
+    flags.password = true
   } else {
     passwordErrorMessage || errorMessage(password)
-    formFrag.password = false
+    flags.password = false
   }
 
-  submitBtnFrag()
+  submitBtnFlag()
 })
 
 /**
@@ -137,17 +138,13 @@ const modalOpen = () => {
 }
 
 /**
- *  formFragがすべてtrueか、利用規約を最後まで読んだか を確認する関数
+ *  flagsがすべてtrueか、利用規約を最後まで読んだか を確認する関数
  *  各フォーム入力時と利用規約を最後まで読んだ時に実行
  *  全てtrueならsubmitBtnのdisabledを削除、ひとつでもfalseであればdisable付与
  */
-const submitBtnFrag = () => {
-  if (
-    checkbox.checked === true &&
-    formFrag.userName === true &&
-    formFrag.mail === true &&
-    formFrag.password === true
-  ) {
+const submitBtnFlag = () => {
+  const result = Object.values(flags).every(value => value)
+  if (result) {
     submitBtn.disabled = false
   } else {
     submitBtn.disabled = true
@@ -175,6 +172,7 @@ modal.onscroll = function () {
   if (modalScrollHeight - (modalHeight + modalScrollTop) === 0) {
     checkbox.disabled = false
     checkbox.checked = true
-    submitBtnFrag()
+    flags.checkbox = true
+    submitBtnFlag()
   }
 }

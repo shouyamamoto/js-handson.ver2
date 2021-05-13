@@ -109,6 +109,7 @@ button:hover {
 }
 .submitBtn:disabled {
   background-color: #ccc;
+  cursor: not-allowed;
 }
 .mask {
   display: block;
