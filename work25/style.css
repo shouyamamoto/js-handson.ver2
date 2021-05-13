@@ -131,10 +131,13 @@ button:hover {
 }
 .errorMessage {
   color: #da5040;
-  display: block;
+  display: none;
   text-decoration: none;
   text-align: right;
 }
 .register-done-text {
   text-align: center;
+}
+.active {
+  display: block;
 }

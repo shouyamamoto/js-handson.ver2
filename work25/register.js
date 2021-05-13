@@ -31,10 +31,10 @@ userName.addEventListener('input', () => {
   const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 
   if (result) {
-    userNameErrorMessage && userNameErrorMessage.remove()
+    userNameErrorMessage?.classList.remove('active')
     flags.userName = true
   } else {
-    userNameErrorMessage || errorMessage(userName)
+    outPutErrorMessage(userName, userNameErrorMessage)
     flags.userName = false
   }
 
@@ -47,10 +47,10 @@ mail.addEventListener('blur', () => {
   const mailErrorMessage = document.getElementById('mailErrorMessage')
 
   if (result) {
-    mailErrorMessage && mailErrorMessage.remove()
+    mailErrorMessage?.classList.remove('active')
     flags.mail = true
   } else {
-    mailErrorMessage || errorMessage(mail)
+    outPutErrorMessage(mail, mailErrorMessage)
     flags.mail = false
   }
 
@@ -63,10 +63,10 @@ password.addEventListener('blur', () => {
   const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
   if (result) {
-    passwordErrorMessage && passwordErrorMessage.remove()
+    passwordErrorMessage?.classList.remove('active')
     flags.password = true
   } else {
-    passwordErrorMessage || errorMessage(password)
+    outPutErrorMessage(password, passwordErrorMessage)
     flags.password = false
   }
 
@@ -103,26 +103,30 @@ const passwordCheck = (inputPassword) => {
 }
 
 // エラーメッセージの出力
-const errorMessage = (inputField) => {
-  const errorMessage = document.createElement('span')
-  errorMessage.classList.add('errorMessage')
+const outPutErrorMessage = (inputField, argErrorMessage) => {
+  if (argErrorMessage) {
+    argErrorMessage.classList.add('active')
+  } else {
+    const errorMessage = document.createElement('span')
+    errorMessage.classList.add('errorMessage', 'active')
 
-  switch (inputField) {
-    case userName:
-      errorMessage.id = 'userNameErrorMessage'
-      errorMessage.textContent = '※ユーザ名は1文字以上、15文字以下にしてください'
-      break
-    case mail:
-      errorMessage.id = 'mailErrorMessage'
-      errorMessage.textContent = '※メールアドレスの形式になっていません'
-      break
-    case password:
-      errorMessage.id = 'passwordErrorMessage'
-      errorMessage.textContent = '※8文字以上の大小の英数字を交ぜたものにしてください'
-      break
+    switch (inputField) {
+      case userName:
+        errorMessage.id = 'userNameErrorMessage'
+        errorMessage.textContent = '※ユーザ名は1文字以上、15文字以下にしてください'
+        break
+      case mail:
+        errorMessage.id = 'mailErrorMessage'
+        errorMessage.textContent = '※メールアドレスの形式になっていません'
+        break
+      case password:
+        errorMessage.id = 'passwordErrorMessage'
+        errorMessage.textContent = '※8文字以上の大小の英数字を交ぜたものにしてください'
+        break
+    }
+
+    inputField.parentNode.appendChild(errorMessage)
   }
-
-  inputField.parentNode.appendChild(errorMessage)
 }
 
 const modalClose = () => {
