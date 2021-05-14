@@ -161,12 +161,13 @@ closeIcon.addEventListener('click', modalClose)
 
 closeBtn.addEventListener('click', modalClose)
 
-submitBtn.addEventListener('click', (e) => {
+const submitHandler = (e) => {
   e.preventDefault()
   if (checkbox.checked) {
     location.href = './register-done.html'
   }
-})
+}
+submitBtn.addEventListener('click', submitHandler)
 
 modal.onscroll = function () {
   const modalHeight = this.clientHeight
