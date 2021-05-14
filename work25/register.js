@@ -104,7 +104,7 @@ const passwordCheck = (inputPassword) => {
 
 // エラーメッセージの出力
 const outPutErrorMessage = (inputField, argErrorMessage) => {
-  if (argErrorMessage) {
+  if (argErrorMessage !== null) {
     argErrorMessage.classList.add('active')
   } else {
     const errorMessage = document.createElement('span')
