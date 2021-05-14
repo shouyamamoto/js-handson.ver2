@@ -84,22 +84,22 @@ password.addEventListener('blur', () => {
  * パスワード： 
     - 8文字以上の大小の英数字を交ぜたもの
  */
+const nameLength = {
+  minLength: 1,
+  maxLength: 15
+}
 const nameLengthCheck = (inputUserName) => {
-  const minLength = 1
-  const maxLength = 15
-  return inputUserName.length >= minLength && inputUserName.length <= maxLength
+  return inputUserName.length >= nameLength.minLength && inputUserName.length <= nameLength.maxLength
 }
 
+const mailRegex = /^[a-z\d][0-9a-z\.-]{2,29}@.+\..{2,}/
 const mailCheck = (inputMail) => {
-  const regex = /^[a-z\d][0-9a-z\.-]{2,29}@.+\..{2,}/
-  const result = regex.test(inputMail)
-  return result
+  return mailRegex.test(inputMail)
 }
 
+const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/
 const passwordCheck = (inputPassword) => {
-  const regex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/
-  const result = regex.test(inputPassword)
-  return result
+  return passwordRegex.test(inputPassword)
 }
 
 // エラーメッセージの出力
