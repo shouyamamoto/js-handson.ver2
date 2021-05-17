@@ -18,61 +18,6 @@ const flags = {
   mail: false,
   password: false
 }
-
-/**
- * 各フォームのイベント発火タイミング
- * ユーザ名： 入力時
- * メールアドレス： フォームからフォーカスが離れた時
- * パスワード： フォームからフォーカスが離れた時
- */
-userName.addEventListener('input', () => {
-  const inputUserName = userName.value
-  const result = nameLengthCheck(inputUserName)
-  const userNameErrorMessage = document.getElementById('userNameErrorMessage')
-
-  if (result) {
-    userNameErrorMessage?.classList.remove('active')
-    flags.userName = true
-  } else {
-    outPutErrorMessage(userName, userNameErrorMessage)
-    flags.userName = false
-  }
-
-  submitBtnFlag()
-})
-
-mail.addEventListener('blur', () => {
-  const inputMail = mail.value
-  const result = mailCheck(inputMail)
-  const mailErrorMessage = document.getElementById('mailErrorMessage')
-
-  if (result) {
-    mailErrorMessage?.classList.remove('active')
-    flags.mail = true
-  } else {
-    outPutErrorMessage(mail, mailErrorMessage)
-    flags.mail = false
-  }
-
-  submitBtnFlag()
-})
-
-password.addEventListener('blur', () => {
-  const inputPassword = password.value
-  const result = passwordCheck(inputPassword)
-  const passwordErrorMessage = document.getElementById('passwordErrorMessage')
-
-  if (result) {
-    passwordErrorMessage?.classList.remove('active')
-    flags.password = true
-  } else {
-    outPutErrorMessage(password, passwordErrorMessage)
-    flags.password = false
-  }
-
-  submitBtnFlag()
-})
-
 /**
  * 各フォームのバリデーション
  * ユーザ名： 
@@ -84,22 +29,32 @@ password.addEventListener('blur', () => {
  * パスワード： 
     - 8文字以上の大小の英数字を交ぜたもの
  */
-const nameLength = {
-  minLength: 1,
-  maxLength: 15
+const formValid = {
+  name: {
+    minLength: 1,
+    maxLength: 15
+  },
+  mail: {
+    regex: /^[a-z\d][0-9a-z.-]{2,29}@.+\..{2,}/
+  },
+  password: {
+    regex: /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/
+  }
 }
+
 const nameLengthCheck = (inputUserName) => {
-  return inputUserName.length >= nameLength.minLength && inputUserName.length <= nameLength.maxLength
+  const { name: { minLength, maxLength } } = formValid
+  return inputUserName.length >= minLength && inputUserName.length <= maxLength
 }
 
-const mailRegex = /^[a-z\d][0-9a-z\.-]{2,29}@.+\..{2,}/
 const mailCheck = (inputMail) => {
-  return mailRegex.test(inputMail)
+  const { mail: { regex } } = formValid
+  return regex.test(inputMail)
 }
 
-const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,}/
 const passwordCheck = (inputPassword) => {
-  return passwordRegex.test(inputPassword)
+  const { password: { regex } } = formValid
+  return regex.test(inputPassword)
 }
 
 // エラーメッセージの出力
@@ -129,18 +84,6 @@ const outPutErrorMessage = (inputField, argErrorMessage) => {
   }
 }
 
-const modalClose = () => {
-  modal.classList.remove('active')
-  mask.classList.remove('active')
-  closeIcon.classList.remove('active')
-}
-
-const modalOpen = () => {
-  modal.classList.add('active')
-  mask.classList.add('active')
-  closeIcon.classList.add('active')
-}
-
 /**
  *  flagsがすべてtrueか、利用規約を最後まで読んだか を確認する関数
  *  各フォーム入力時と利用規約を最後まで読んだ時に実行
@@ -154,6 +97,57 @@ const submitBtnFlag = () => {
     submitBtn.disabled = true
   }
 }
+
+/**
+ * 各フォームのイベント発火タイミング
+ * ユーザ名： 入力時
+ * メールアドレス： フォームからフォーカスが離れた時
+ * パスワード： フォームからフォーカスが離れた時
+ */
+const formEventHandler = (inputArea, applyErrorMessage, callbackValid, key) => {
+  const inputValue = inputArea.value
+  const result = callbackValid(inputValue)
+  const errorMessage = document.getElementById(applyErrorMessage)
+
+  if (result) {
+    errorMessage?.classList.remove('active')
+    flags[key] = true
+  } else {
+    outPutErrorMessage(inputArea, errorMessage)
+    flags[key] = false
+  }
+
+  submitBtnFlag()
+}
+
+userName.addEventListener(
+  'input',
+  () => formEventHandler(userName, 'userNameErrorMessage', nameLengthCheck, 'userName')
+)
+
+mail.addEventListener(
+  'blur',
+  () => formEventHandler(mail, 'mailErrorMessage', mailCheck, 'mail')
+)
+
+password.addEventListener(
+  'blur',
+  () => formEventHandler(password, 'passwordErrorMessage', passwordCheck, 'password')
+)
+
+
+const modalClose = () => {
+  modal.classList.remove('active')
+  mask.classList.remove('active')
+  closeIcon.classList.remove('active')
+}
+
+const modalOpen = () => {
+  modal.classList.add('active')
+  mask.classList.add('active')
+  closeIcon.classList.add('active')
+}
+
 
 agreeText.addEventListener('click', modalOpen)
 
