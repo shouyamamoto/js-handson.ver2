@@ -43,17 +43,17 @@ const formSpecifications = {
 }
 
 const nameLengthCheck = (inputUserName) => {
-  const { name: { minLength, maxLength } } = formValid
+  const { name: { minLength, maxLength } } = formSpecifications
   return inputUserName.length >= minLength && inputUserName.length <= maxLength
 }
 
 const mailCheck = (inputMail) => {
-  const { mail: { regex } } = formValid
+  const { mail: { regex } } = formSpecifications
   return regex.test(inputMail)
 }
 
 const passwordCheck = (inputPassword) => {
-  const { password: { regex } } = formValid
+  const { password: { regex } } = formSpecifications
   return regex.test(inputPassword)
 }
 
