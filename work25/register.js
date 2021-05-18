@@ -29,7 +29,7 @@ const flags = {
  * パスワード： 
     - 8文字以上の大小の英数字を交ぜたもの
  */
-const formValid = {
+const formSpecifications = {
   name: {
     minLength: 1,
     maxLength: 15
