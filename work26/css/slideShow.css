@@ -1,0 +1,93 @@
+.slideShowContainer {
+  position: relative;
+  margin: 120px auto 160px;
+  width: 80%;
+}
+
+.slideShow {
+  position: relative;
+  min-height: 400px;
+  max-height: 400px;
+}
+.slideImage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+.slideImage.active {
+  z-index: 1;
+}
+
+.prevArrow {
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: -80px;
+  transform: translateY(-50%);
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 20px solid #000;
+  opacity: 0;
+  cursor: pointer;
+}
+.nextArrow {
+  position: absolute;
+  display: block;
+  top: 50%;
+  right: -80px;
+  transform: translateY(-50%);
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #000;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.nextArrow.visible,
+.prevArrow.visible {
+  opacity: 1;
+}
+
+.nextArrow.disabled,
+.prevArrow.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.pagination {
+  position: absolute;
+  bottom: -80px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dotPagination {
+  position: absolute;
+  bottom: -40px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.dotPagination > span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.dotPagination > span:not(:last-child) {
+  margin-right: 10px;
+}
+.dotPagination > span.active {
+  background-color: #da5040;
+  border: 1px solid #da5040;
+}
