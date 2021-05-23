@@ -107,7 +107,8 @@ button:hover {
 .closeBtn {
   margin-top: 40px;
 }
-.submitBtn:disabled {
+.submitBtn:disabled,
+.loginBtn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }

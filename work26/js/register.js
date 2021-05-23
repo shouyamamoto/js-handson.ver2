@@ -121,7 +121,7 @@ const formEventHandler = (inputArea, applyErrorMessage, callbackValid, key) => {
 }
 
 userName.addEventListener(
-  'input',
+  'blur',
   () => formEventHandler(userName, 'userNameErrorMessage', nameLengthCheck, 'userName')
 )
 

@@ -5,13 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS課題26</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div>
-      <a href="./register.html">会員登録はこちら</a>
-      <a href="./forgetpassword.html">パスワードを忘れた方はこちら</a>
-    </div>
+    <form>
+      <h1>ログイン画面</h1>
+      <ul>
+        <li>
+          <label for="userName">名前</label>
+          <input type="text" id="userName" />
+          <span id="userNameErrorMessage" class="errorMessage">
+            ※ユーザ名は1文字以上、15文字以下を入力してください
+          </span>
+        </li>
+        <li>
+          <label for="password">パスワード</label>
+          <input type="text" id="password" />
+          <span id="passwordErrorMessage" class="errorMessage">
+            ※8文字以上の大小の英数字を交ぜたものを入力してください
+          </span>
+        </li>
+        <li>
+          <a href="./register.html">会員登録はこちら</a><br />
+          <a href="./forgetpassword.html">パスワードを忘れた方はこちら</a>
+        </li>
+        <li>
+          <button id="js-loginBtn" class="loginBtn" disabled>ログイン</button>
+        </li>
+      </ul>
+    </form>
 
     <script src="js/login.js"></script>
   </body>
