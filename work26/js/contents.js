@@ -1,3 +1,4 @@
+
 // fetchするJSON
 const fetchContentsURL = 'https://jsondata.okiba.me/v1/json/nzTkc210429210909'
 
@@ -125,13 +126,17 @@ function tabClickAction(tabList) {
   tabList.forEach(clickTab => {
     clickTab.addEventListener('click', () => {
       tabList.forEach(tab => {
-        tab.classList.remove('active')
+        if (isActive(tab)) { // isActiveはslideShow.jsで定義
+          tab.classList.remove('active')
+        }
       })
 
       clickTab.classList.add('active')
 
       contents.forEach(content => {
-        content.classList.remove('active')
+        if (isActive(content)) { // isActiveはslideShow.jsで定義
+          content.classList.remove('active')
+        }
       })
 
       document.getElementById(clickTab.dataset.id).classList.add('active')
