@@ -122,19 +122,19 @@ function addTabId(category, tabItem) {
 }
 
 function tabClickAction(tabList) {
-  tabList.forEach(clickedTab => {
-    clickedTab.addEventListener('click', () => {
+  tabList.forEach(clickTab => {
+    clickTab.addEventListener('click', () => {
       tabList.forEach(tab => {
         tab.classList.remove('active')
       })
 
-      clickedTab.classList.add('active')
+      clickTab.classList.add('active')
 
       contents.forEach(content => {
         content.classList.remove('active')
       })
 
-      document.getElementById(clickedTab.dataset.id).classList.add('active')
+      document.getElementById(clickTab.dataset.id).classList.add('active')
     })
   })
 }
