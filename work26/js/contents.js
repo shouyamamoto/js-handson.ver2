@@ -337,7 +337,7 @@ function addActiveClassName(target) {
 
 // login.htmlでsessionStorageに保存した値をlocalStorageに保存
 const setTokenToLocalStorage = () => {
-  localStorage.token = sessionStorage.token
+  localStorage.setItem('token', sessionStorage.token)
 }
 setTokenToLocalStorage()
 
