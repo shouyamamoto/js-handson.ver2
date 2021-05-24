@@ -2,11 +2,12 @@
 const loginBtn = document.getElementById('js-loginBtn')
 const userName = document.getElementById('userName')
 const password = document.getElementById('password')
+const token = document.getElementById('token')
 const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
 const checkLocalStorageToken = () => {
-  return localStorage.token === 'far0fja*ff]afaawfqrlzkfq@aq9283af'
+  return localStorage.token === token.value
 }
 if (checkLocalStorageToken()) {
   location.href = './contents.html'
@@ -18,7 +19,7 @@ const loginHandler = async (e) => {
   const inputUserData = {
     name: userName.value,
     password: password.value,
-    token: 'far0fja*ff]afaawfqrlzkfq@aq9283af'
+    token: token.value
   }
 
   let result
