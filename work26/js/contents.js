@@ -109,16 +109,24 @@ function checkTabIsActive(isInit) {
 }
 
 function addTabId(category, tabItem) {
-  if (category === 'ニュース') {
-    tabItem.dataset.id = 'js-news'
-  } else if (category === '経済') {
-    tabItem.dataset.id = 'js-economy'
-  } else if (category === 'エンタメ') {
-    tabItem.dataset.id = 'js-entertainment'
-  } else if (category === 'スポーツ') {
-    tabItem.dataset.id = 'js-sports'
-  } else if (category === '国内') {
-    tabItem.dataset.id = 'js-japan'
+  switch (category) {
+    case 'ニュース':
+      tabItem.dataset.id = 'js-news'
+      break
+    case '経済':
+      tabItem.dataset.id = 'js-economy'
+      break
+    case 'エンタメ':
+      tabItem.dataset.id = 'js-entertainment'
+      break
+    case 'スポーツ':
+      tabItem.dataset.id = 'js-sports'
+      break
+    case '国内':
+      tabItem.dataset.id = 'js-japan'
+      break
+    default:
+      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
@@ -147,17 +155,25 @@ function tabClickAction(tabList) {
 function checkContentsIsInit(articles) {
   for (const article of articles) {
     const { category, isInit } = article
-
-    if (category === 'ニュース' && isInit) {
-      addActiveClassName(newsContents)
-    } else if (category === '経済' && isInit) {
-      addActiveClassName(economyContents)
-    } else if (category === 'エンタメ' && isInit) {
-      addActiveClassName(entertainmentContents)
-    } else if (category === 'スポーツ' && isInit) {
-      addActiveClassName(sportsContents)
-    } else if (category === '国内' && isInit) {
-      addActiveClassName(japanContents)
+    if (!isInit) return
+    switch (category) {
+      case 'ニュース':
+        addActiveClassName(newsContents)
+        break
+      case '経済':
+        addActiveClassName(economyContents)
+        break
+      case 'エンタメ':
+        addActiveClassName(entertainmentContents)
+        break
+      case 'スポーツ':
+        addActiveClassName(sportsContents)
+        break
+      case '国内':
+        addActiveClassName(japanContents)
+        break
+      default:
+        tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
     }
   }
 }
@@ -224,40 +240,56 @@ function getDayLag(createdAt) {
 }
 
 function addNewIcon(category, titleElement, newIcon) {
-  if (category === 'ニュース') {
-    titleElement.appendChild(newIcon)
-  } else if (category === '経済') {
-    titleElement.appendChild(newIcon)
-  } else if (category === 'エンタメ') {
-    titleElement.appendChild(newIcon)
-  } else if (category === 'スポーツ') {
-    titleElement.appendChild(newIcon)
-  } else if (category === '国内') {
-    titleElement.appendChild(newIcon)
+  switch (category) {
+    case 'ニュース':
+      titleElement.appendChild(newIcon)
+      break
+    case '経済':
+      titleElement.appendChild(newIcon)
+      break
+    case 'エンタメ':
+      titleElement.appendChild(newIcon)
+      break
+    case 'スポーツ':
+      titleElement.appendChild(newIcon)
+      break
+    case '国内':
+      titleElement.appendChild(newIcon)
+      break
+    default:
+      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
 function addTitle(category, titleFrag) {
-  if (category === 'ニュース') {
-    newsTitleWrap.appendChild(titleFrag)
-    newsContentsInner.appendChild(newsTitleWrap)
-    newsContents.appendChild(newsContentsInner)
-  } else if (category === '経済') {
-    economyTitleWrap.appendChild(titleFrag)
-    economyContentsInner.appendChild(economyTitleWrap)
-    economyContents.appendChild(economyContentsInner)
-  } else if (category === 'エンタメ') {
-    entertainmentTitleWrap.appendChild(titleFrag)
-    entertainmentContentsInner.appendChild(entertainmentTitleWrap)
-    entertainmentContents.appendChild(entertainmentContentsInner)
-  } else if (category === 'スポーツ') {
-    sportsTitleWrap.appendChild(titleFrag)
-    sportsContentsInner.appendChild(sportsTitleWrap)
-    sportsContents.appendChild(sportsContentsInner)
-  } else if (category === '国内') {
-    japanTitleWrap.appendChild(titleFrag)
-    japanContentsInner.appendChild(japanTitleWrap)
-    japanContents.appendChild(japanContentsInner)
+  switch (category) {
+    case 'ニュース':
+      newsTitleWrap.appendChild(titleFrag)
+      newsContentsInner.appendChild(newsTitleWrap)
+      newsContents.appendChild(newsContentsInner)
+      break
+    case '経済':
+      economyTitleWrap.appendChild(titleFrag)
+      economyContentsInner.appendChild(economyTitleWrap)
+      economyContents.appendChild(economyContentsInner)
+      break
+    case 'エンタメ':
+      entertainmentTitleWrap.appendChild(titleFrag)
+      entertainmentContentsInner.appendChild(entertainmentTitleWrap)
+      entertainmentContents.appendChild(entertainmentContentsInner)
+      break
+    case 'スポーツ':
+      sportsTitleWrap.appendChild(titleFrag)
+      sportsContentsInner.appendChild(sportsTitleWrap)
+      sportsContents.appendChild(sportsContentsInner)
+      break
+    case '国内':
+      japanTitleWrap.appendChild(titleFrag)
+      japanContentsInner.appendChild(japanTitleWrap)
+      japanContents.appendChild(japanContentsInner)
+      break
+    default:
+      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
@@ -273,21 +305,29 @@ function createImages(articles) {
 }
 
 function addImages(category, imgElement) {
-  if (category === 'ニュース') {
-    newsContentsInner.appendChild(imgElement)
-    newsContents.appendChild(newsContentsInner)
-  } else if (category === '経済') {
-    economyContentsInner.appendChild(imgElement)
-    economyContents.appendChild(economyContentsInner)
-  } else if (category === 'エンタメ') {
-    entertainmentContentsInner.appendChild(imgElement)
-    entertainmentContents.appendChild(entertainmentContentsInner)
-  } else if (category === 'スポーツ') {
-    sportsContentsInner.appendChild(imgElement)
-    sportsContents.appendChild(sportsContentsInner)
-  } else if (category === '国内') {
-    japanContentsInner.appendChild(imgElement)
-    japanContents.appendChild(japanContentsInner)
+  switch (category) {
+    case 'ニュース':
+      newsContentsInner.appendChild(imgElement)
+      newsContents.appendChild(newsContentsInner)
+      break
+    case '経済':
+      economyContentsInner.appendChild(imgElement)
+      economyContents.appendChild(economyContentsInner)
+      break
+    case 'エンタメ':
+      entertainmentContentsInner.appendChild(imgElement)
+      entertainmentContents.appendChild(entertainmentContentsInner)
+      break
+    case 'スポーツ':
+      sportsContentsInner.appendChild(imgElement)
+      sportsContents.appendChild(sportsContentsInner)
+      break
+    case '国内':
+      japanContentsInner.appendChild(imgElement)
+      japanContents.appendChild(japanContentsInner)
+      break
+    default:
+      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
