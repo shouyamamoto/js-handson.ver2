@@ -5,18 +5,6 @@ const password = document.getElementById('password')
 const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
-// localStorageに保存するuserのデータ
-const setUser = {
-  name: 'shouyamamoto',
-  password: 'Yamamoto00001111'
-}
-
-const setUserToLocalStorage = () => {
-  localStorage.name = setUser.name
-  localStorage.password = setUser.password
-}
-setUserToLocalStorage()
-
 const checkLocalStorageToken = () => {
   return localStorage.token === 'far0fja*ff]afaawfqrlzkfq@aq9283af'
 }
@@ -26,6 +14,7 @@ if (checkLocalStorageToken()) {
 
 const loginHandler = async (e) => {
   e.preventDefault()
+  setUserToLocalStorage()
   const inputUserData = {
     name: userName.value,
     password: password.value,
@@ -43,6 +32,10 @@ const loginHandler = async (e) => {
 }
 loginBtn.addEventListener('click', loginHandler)
 
+const setUserToLocalStorage = () => {
+  localStorage.setItem('name', userName.value)
+  localStorage.setItem('password', password.value)
+}
 const checkSubmitData = (inputUserData) => {
   return new Promise((resolve, reject) => {
     if (checkUserName(inputUserData.name) && checkPassword(inputUserData.password)) {
