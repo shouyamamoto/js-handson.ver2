@@ -84,7 +84,7 @@ init(fetchContentsURL)
 
 function createTabs(articles) {
   const tabFrag = document.createDocumentFragment()
-  const tabList = new Set()
+  const tabList = []
 
   for (const article of articles) {
     const { category, isInit } = article
@@ -93,7 +93,7 @@ function createTabs(articles) {
     tabItem.classList.add('tab__item')
     tabFrag.appendChild(tabItem)
     tabs.appendChild(tabFrag)
-    tabList.add(tabItem)
+    tabList.push(tabItem)
 
     if (checkTabIsActive(isInit)) {
       addActiveClassName(tabItem)
@@ -131,23 +131,14 @@ function addTabId(category, tabItem) {
 }
 
 function tabClickAction(tabList) {
-  tabList.forEach(clickTab => {
+  let currentNum = 0
+  tabList.forEach((clickTab, index) => {
     clickTab.addEventListener('click', () => {
-      tabList.forEach(tab => {
-        if (isActive(tab)) { // isActiveはslideShow.jsで定義
-          tab.classList.remove('active')
-        }
-      })
-
-      clickTab.classList.add('active')
-
-      contents.forEach(content => {
-        if (isActive(content)) { // isActiveはslideShow.jsで定義
-          content.classList.remove('active')
-        }
-      })
-
-      document.getElementById(clickTab.dataset.id).classList.add('active')
+      tabList[currentNum].classList.remove('active')
+      contents[currentNum].classList.remove('active')
+      currentNum = index
+      tabList[currentNum].classList.add('active')
+      contents[currentNum].classList.add('active')
     })
   })
 }
