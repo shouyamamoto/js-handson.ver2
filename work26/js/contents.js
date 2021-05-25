@@ -239,8 +239,6 @@ function addNewIcon(category, titleElement, newIcon) {
     case '国内':
       titleElement.appendChild(newIcon)
       break
-    default:
-      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
@@ -271,8 +269,6 @@ function addTitle(category, titleFrag) {
       japanContentsInner.appendChild(japanTitleWrap)
       japanContents.appendChild(japanContentsInner)
       break
-    default:
-      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
@@ -309,8 +305,6 @@ function addImages(category, imgElement) {
       japanContentsInner.appendChild(imgElement)
       japanContents.appendChild(japanContentsInner)
       break
-    default:
-      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
   }
 }
 
