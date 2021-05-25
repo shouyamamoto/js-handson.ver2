@@ -53,6 +53,10 @@ for (let i = 0; i < contents.length; i++) {
   body.appendChild(contentsWrap)
 }
 
+const tabState = {
+  currentNum: 0
+}
+
 async function fetchArticle(url) {
   try {
     const response = await fetch(url)
@@ -131,14 +135,13 @@ function addTabId(category, tabItem) {
 }
 
 function tabClickAction(tabList) {
-  let currentNum = 0
   tabList.forEach((clickTab, index) => {
     clickTab.addEventListener('click', () => {
-      tabList[currentNum].classList.remove('active')
-      contents[currentNum].classList.remove('active')
-      currentNum = index
-      tabList[currentNum].classList.add('active')
-      contents[currentNum].classList.add('active')
+      tabList[tabState.currentNum].classList.remove('active')
+      contents[tabState.currentNum].classList.remove('active')
+      tabState.currentNum = index
+      tabList[tabState.currentNum].classList.add('active')
+      contents[tabState.currentNum].classList.add('active')
     })
   })
 }
