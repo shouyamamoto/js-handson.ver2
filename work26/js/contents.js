@@ -156,7 +156,7 @@ function checkContentsIsInit(articles) {
         addActiveClassName(japanContents)
         break
       default:
-        tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
+        addActiveClassName(newsContents)
     }
   }
 }
