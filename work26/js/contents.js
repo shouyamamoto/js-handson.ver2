@@ -135,8 +135,8 @@ function addTabId(category, tabItem) {
 }
 
 function tabClickAction(tabList) {
-  tabList.forEach((clickTab, index) => {
-    clickTab.addEventListener('click', () => {
+  tabList.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
       tabList[tabState.currentNum].classList.remove('active')
       contents[tabState.currentNum].classList.remove('active')
       tabState.currentNum = index
