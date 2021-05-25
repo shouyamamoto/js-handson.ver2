@@ -112,26 +112,15 @@ function checkTabIsActive(isInit) {
   if (isInit) return true
 }
 
-function addTabId(category, tabItem) {
-  switch (category) {
-    case 'ニュース':
-      tabItem.dataset.id = 'js-news'
-      break
-    case '経済':
-      tabItem.dataset.id = 'js-economy'
-      break
-    case 'エンタメ':
-      tabItem.dataset.id = 'js-entertainment'
-      break
-    case 'スポーツ':
-      tabItem.dataset.id = 'js-sports'
-      break
-    case '国内':
-      tabItem.dataset.id = 'js-japan'
-      break
-    default:
-      tabs.textContent = 'ただいまサーバー側がぶっこわれています。'
+function addTabId(key, tabItem) {
+  const mapCategory = {
+    "ニュース": "js-news",
+    "経済": "js-economy",
+    "エンタメ": "js-entertainment",
+    "スポーツ": "js-sports",
+    "国内": "js-japan"
   }
+  tabItem.dataset.id = mapCategory[key]
 }
 
 function tabClickAction(tabList) {
