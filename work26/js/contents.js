@@ -156,7 +156,7 @@ function checkContentsIsInit(articles) {
         addActiveClassName(japanContents)
         break
       default:
-        addActiveClassName(newsContents)
+        addActiveClassName(contents[0])
     }
   }
 }
