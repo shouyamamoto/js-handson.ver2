@@ -53,8 +53,8 @@ const checkUserName = (inputName) => {
 const checkPassword = (inputPassword) => {
   return localStorage.password === inputPassword
 }
-const setSessionStorage = (token) => {
-  sessionStorage.token = token
+const setSessionStorage = (publishedToken) => {
+  sessionStorage.setItem('token', publishedToken)
 }
 const changeLocation = (result) => {
   result ? location.href = './contents.html' : location.href = './failure.html'
