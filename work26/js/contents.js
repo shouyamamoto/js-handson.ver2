@@ -124,7 +124,6 @@ function addTabId(key, tabItem) {
 }
 
 function tabClickAction(tabList) {
-  console.log(tabList)
   tabList.forEach((tab, index) => {
     tab.addEventListener('click', () => {
       tabList[tabState.currentNum].classList.remove('active')

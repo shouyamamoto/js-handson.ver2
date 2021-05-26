@@ -2,12 +2,13 @@
 const loginBtn = document.getElementById('js-loginBtn')
 const userName = document.getElementById('userName')
 const password = document.getElementById('password')
-const token = document.getElementById('token')
 const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
+const publishedToken = "far0fja*ff]afaawfqrlzkfq@aq9283af"
+
 const checkLocalStorageToken = () => {
-  return localStorage.token === token.value
+  return localStorage.token === publishedToken
 }
 if (checkLocalStorageToken()) {
   location.href = './contents.html'
@@ -19,7 +20,6 @@ const loginHandler = async (e) => {
   const inputUserData = {
     name: userName.value,
     password: password.value,
-    token: token.value
   }
 
   let result
@@ -41,7 +41,7 @@ const checkSubmitData = (inputUserData) => {
   return new Promise((resolve, reject) => {
     if (checkUserName(inputUserData.name) && checkPassword(inputUserData.password)) {
       resolve(true)
-      setSessionStorage(inputUserData.token)
+      setSessionStorage(publishedToken)
     } else {
       reject()
     }
@@ -53,8 +53,8 @@ const checkUserName = (inputName) => {
 const checkPassword = (inputPassword) => {
   return localStorage.password === inputPassword
 }
-const setSessionStorage = (userToken) => {
-  sessionStorage.token = userToken
+const setSessionStorage = (token) => {
+  sessionStorage.token = token
 }
 const changeLocation = (result) => {
   result ? location.href = './contents.html' : location.href = './failure.html'
