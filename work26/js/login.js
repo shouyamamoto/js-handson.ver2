@@ -6,7 +6,7 @@ const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
 const checkLocalStorageToken = () => {
-  return localStorage.token
+  return localStorage.getItem('token')
 }
 if (checkLocalStorageToken()) {
   location.href = './contents.html'
