@@ -5,10 +5,8 @@ const password = document.getElementById('password')
 const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
-const publishedToken = "far0fja*ff]afaawfqrlzkfq@aq9283af"
-
 const checkLocalStorageToken = () => {
-  return localStorage.token === publishedToken
+  return localStorage.token
 }
 if (checkLocalStorageToken()) {
   location.href = './contents.html'
@@ -24,7 +22,9 @@ const loginHandler = async (e) => {
 
   let result
   try {
-    result = await checkSubmitData(inputUserData)
+    const token = await checkSubmitData(inputUserData)
+    result = true
+    setLocalStorage(token)
   } catch {
     result = false
   } finally {
@@ -40,8 +40,7 @@ const setUserToLocalStorage = () => {
 const checkSubmitData = (inputUserData) => {
   return new Promise((resolve, reject) => {
     if (checkUserName(inputUserData.name) && checkPassword(inputUserData.password)) {
-      resolve(true)
-      setLocalStorage(publishedToken)
+      resolve("far0fja*ff]afaawfqrlzkfq@aq9283af")
     } else {
       reject()
     }
