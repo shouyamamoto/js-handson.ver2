@@ -312,16 +312,9 @@ function addActiveClassName(target) {
   target.classList.add('active')
 }
 
-// login.htmlでsessionStorageに保存した値をlocalStorageに保存
-const setTokenToLocalStorage = () => {
-  localStorage.setItem('token', sessionStorage.token)
-}
-setTokenToLocalStorage()
-
 // ログアウトボタンを押すとtokenを削除し、login.htmlへ
 const logoutBtn = document.getElementById('js-logoutBtn')
 logoutBtn.addEventListener('click', () => {
   localStorage.removeItem('token')
-  sessionStorage.removeItem('token')
   location.href = './login.html'
 })
