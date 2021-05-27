@@ -41,7 +41,7 @@ const checkSubmitData = (inputUserData) => {
   return new Promise((resolve, reject) => {
     if (checkUserName(inputUserData.name) && checkPassword(inputUserData.password)) {
       resolve(true)
-      setSessionStorage(publishedToken)
+      setLocalStorage(publishedToken)
     } else {
       reject()
     }
@@ -53,8 +53,8 @@ const checkUserName = (inputName) => {
 const checkPassword = (inputPassword) => {
   return localStorage.password === inputPassword
 }
-const setSessionStorage = (publishedToken) => {
-  sessionStorage.setItem('token', publishedToken)
+const setLocalStorage = (publishedToken) => {
+  localStorage.setItem('token', publishedToken)
 }
 const changeLocation = (result) => {
   result ? location.href = './contents.html' : location.href = './failure.html'
