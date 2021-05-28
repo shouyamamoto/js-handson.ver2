@@ -85,12 +85,12 @@ const outPutErrorMessage = (inputField, argErrorMessage) => {
 }
 
 /**
- *  flagsがすべてtrueか、利用規約を最後まで読んだか を確認する関数
+ *  validationStateがすべてtrueか、利用規約を最後まで読んだか を確認する関数
  *  各フォーム入力時と利用規約を最後まで読んだ時に実行
  *  全てtrueならsubmitBtnのdisabledを削除、ひとつでもfalseであればdisable付与
  */
 const submitBtnFlag = () => {
-  const result = Object.values(flags).every(value => value)
+  const result = Object.values(validationState).every(value => value)
   if (result) {
     submitBtn.disabled = false
   } else {
@@ -111,10 +111,10 @@ const formEventHandler = (inputArea, applyErrorMessage, callbackValid, key) => {
 
   if (result) {
     errorMessage?.classList.remove('active')
-    flags[key] = true
+    validationState[key] = true
   } else {
     outPutErrorMessage(inputArea, errorMessage)
-    flags[key] = false
+    validationState[key] = false
   }
 
   submitBtnFlag()
@@ -171,7 +171,7 @@ modal.onscroll = function () {
   if (modalScrollHeight - (modalHeight + modalScrollTop) === 0) {
     checkbox.disabled = false
     checkbox.checked = true
-    flags.checkbox = true
+    validationState.checkbox = true
     submitBtnFlag()
   }
 }
