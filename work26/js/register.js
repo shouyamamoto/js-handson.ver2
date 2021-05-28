@@ -12,7 +12,7 @@ const userName = document.getElementById('userName')
 const mail = document.getElementById('mail')
 const password = document.getElementById('password')
 
-const flags = {
+const validationState = {
   checkbox: false,
   userName: false,
   mail: false,
