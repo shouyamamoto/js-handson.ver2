@@ -5,10 +5,6 @@ const password = document.getElementById('password')
 const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
-if (localStorage.getItem('token')) {
-  location.href = './contents.html'
-}
-
 const loginHandler = async (e) => {
   e.preventDefault()
   setUserToLocalStorage()
