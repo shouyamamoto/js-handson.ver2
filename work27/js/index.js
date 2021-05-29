@@ -1,5 +1,7 @@
-if (localStorage.getItem('token')) {
-  location.href = './contents.html'
-} else {
-  location.href = './login.html'
-}
+window.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('token')) {
+    location.href = './contents.html'
+  } else {
+    location.href = './login.html'
+  }
+})
