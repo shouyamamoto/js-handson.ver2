@@ -78,6 +78,8 @@ const outPutErrorMessage = (inputField, argErrorMessage) => {
         errorMessage.id = 'passwordErrorMessage'
         errorMessage.textContent = '※8文字以上の大小の英数字を交ぜたものにしてください'
         break
+      default:
+        return;
     }
 
     inputField.parentNode.appendChild(errorMessage)

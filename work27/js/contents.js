@@ -239,6 +239,8 @@ function addNewIcon(category, titleElement, newIcon) {
     case '国内':
       titleElement.appendChild(newIcon)
       break
+    default:
+      return;
   }
 }
 
@@ -269,6 +271,8 @@ function addTitle(category, titleFrag) {
       japanContentsInner.appendChild(japanTitleWrap)
       japanContents.appendChild(japanContentsInner)
       break
+    default:
+      return;
   }
 }
 
@@ -305,6 +309,8 @@ function addImages(category, imgElement) {
       japanContentsInner.appendChild(imgElement)
       japanContents.appendChild(japanContentsInner)
       break
+    default:
+      return;
   }
 }
 
