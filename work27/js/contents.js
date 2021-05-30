@@ -327,5 +327,7 @@ function addActiveClassName(target) {
 const logoutBtn = document.getElementById('js-logoutBtn')
 logoutBtn.addEventListener('click', () => {
   localStorage.removeItem('token')
+  localStorage.removeItem('name')
+  localStorage.removeItem('password')
   location.href = './login.html'
 })
