@@ -1,3 +1,8 @@
+window.addEventListener('DOMContentLoaded', () => {
+  if (!localStorage.getItem('token')) {
+    location.href = './login.html'
+  }
+})
 
 // fetchするJSON
 const fetchContentsURL = 'https://jsondata.okiba.me/v1/json/nzTkc210429210909'
