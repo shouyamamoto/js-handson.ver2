@@ -5,9 +5,19 @@ const password = document.getElementById('password')
 const userNameErrorMessage = document.getElementById('userNameErrorMessage')
 const passwordErrorMessage = document.getElementById('passwordErrorMessage')
 
+const users = [
+  {
+    name: 'aaaa',
+    password: 'Yamamoto0000'
+  },
+  {
+    name: 'bbbb',
+    password: 'Yamamoto1111'
+  }
+]
+
 const loginHandler = async (e) => {
   e.preventDefault()
-  setUserToLocalStorage()
   const inputUserData = {
     name: userName.value,
     password: password.value,
@@ -26,25 +36,20 @@ const loginHandler = async (e) => {
 }
 loginBtn.addEventListener('click', loginHandler)
 
-const setUserToLocalStorage = () => {
-  localStorage.setItem('name', userName.value)
-  localStorage.setItem('password', password.value)
-}
+
 const checkSubmitData = (inputUserData) => {
   return new Promise((resolve, reject) => {
-    if (checkUserName(inputUserData.name) && checkPassword(inputUserData.password)) {
+    const result = users.some(user =>
+      user.name === inputUserData.name && user.password === inputUserData.password
+    )
+    if (result) {
       resolve("far0fja*ff]afaawfqrlzkfq@aq9283af")
     } else {
       reject()
     }
   })
 }
-const checkUserName = (inputName) => {
-  return localStorage.name === inputName
-}
-const checkPassword = (inputPassword) => {
-  return localStorage.password === inputPassword
-}
+
 const setLocalStorage = (publishedToken) => {
   localStorage.setItem('token', publishedToken)
 }
