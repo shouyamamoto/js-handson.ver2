@@ -39,7 +39,7 @@ loginBtn.addEventListener('click', loginHandler)
 
 const checkSubmitData = (inputUserData) => {
   return new Promise((resolve, reject) => {
-    const result = users.some(user =>
+    const result = users.find(user =>
       user.name === inputUserData.name && user.password === inputUserData.password
     )
     if (result) {
