@@ -1,0 +1,144 @@
+.tab {
+  display: flex;
+  justify-content: space-between;
+}
+.tab__item {
+  flex-basis: 20%;
+  text-align: center;
+  transition: all 0.3s;
+  padding: 20px;
+  background-color: #da5040;
+  color: #ffffff;
+  border-radius: 6px 6px 0 0;
+}
+.tab__item:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+.tab__item.active {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.content {
+  display: none;
+}
+.content.active {
+  display: block;
+}
+
+.content__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px 40px;
+  height: 400px;
+}
+
+.title {
+  padding: 10px;
+}
+
+.title > a {
+  text-decoration: none;
+  color: #000000;
+  transition: all 0.3s;
+}
+
+.title > a:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.comment {
+  margin-left: 20px;
+}
+.comment_icon {
+  margin-left: 10px;
+}
+.new_icon {
+  margin-left: 10px;
+  width: 30px;
+  vertical-align: middle;
+}
+.img {
+  width: 200px;
+  height: auto;
+}
+
+.tab {
+  display: flex;
+  justify-content: space-between;
+}
+.tab__item {
+  flex-basis: 20%;
+  text-align: center;
+  transition: all 0.3s;
+  padding: 20px;
+  background-color: #da5040;
+  color: #ffffff;
+  border-radius: 6px 6px 0 0;
+}
+.tab__item:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+.tab__item.active {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.content {
+  display: none;
+}
+.content.active {
+  display: block;
+}
+
+.content__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px 40px;
+  height: 400px;
+}
+
+.title {
+  padding: 10px;
+}
+
+.title > a {
+  text-decoration: none;
+  color: #000000;
+  transition: all 0.3s;
+}
+
+.title > a:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.comment {
+  margin-left: 20px;
+}
+.comment_icon {
+  margin-left: 10px;
+}
+.new_icon {
+  margin-left: 10px;
+  width: 30px;
+  vertical-align: middle;
+}
+.img {
+  width: 200px;
+  height: auto;
+}
+.logoutBtn {
+  color: #fff;
+  background-color: #da5040;
+  width: 100px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 40px;
+  cursor: pointer;
+}
